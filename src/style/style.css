@@ -1,0 +1,227 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: #000;
+}
+
+.container {
+  width: 100%;
+  height: 80px;
+  background: rgba(34, 34, 34, 0.25);
+  -webkit-box-shadow: 0 8px 32px 0 rgba(22, 26, 71, 0.37);
+          box-shadow: 0 8px 32px 0 rgba(22, 26, 71, 0.37);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 10px 10px 0 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  position: absolute;
+  right: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  bottom: 0;
+  padding: 0 20px;
+}
+
+.container .song-content {
+  width: 300px;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border: 1px solid red;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.container .song-content .song_cover {
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.container .song-content .song_cover img {
+  width: 100%;
+  height: 100%;
+}
+
+.container .song-content .song-credits {
+  margin-left: 10px;
+  height: 100%;
+  padding: 20px 0;
+}
+
+.container .song-content .song-credits .song_title {
+  color: #FFF;
+  cursor: default;
+  font-size: .8em;
+}
+
+.container .song-content .song-credits .song_artist {
+  color: #c4c4c4;
+  font-size: .8em;
+  cursor: default;
+}
+
+.container .song-content .song-credits .song_artist:hover {
+  text-decoration: underline;
+}
+
+.container .player {
+  width: 100%;
+  height: 100%;
+  border: 1px solid yellow;
+  padding: 5px 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.container .player .buttons-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  max-width: 300px;
+  width: 100%;
+  height: 100px;
+  padding: 0 10px;
+}
+
+.container .player .buttons-wrapper .control-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+.container .player .buttons-wrapper .secondary-btn {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.container .player .player-dragger {
+  width: 100%;
+  height: 100%;
+  padding: 0 20%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.container .player .player-dragger .timeline-wrapper {
+  width: 100%;
+  height: 5px;
+  border-radius: 50px;
+  background-color: #545454;
+  position: relative;
+}
+
+.container .player .player-dragger .timeline-wrapper:hover .current-drag {
+  background-color: #34eb6b;
+}
+
+.container .player .player-dragger .timeline-wrapper:hover .current-drag::before {
+  visibility: visible;
+}
+
+.container .player .player-dragger .timeline-wrapper .current-drag {
+  position: absolute;
+  background-color: #FFF;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-radius: 50px;
+}
+
+.container .player .player-dragger .timeline-wrapper .current-drag::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  -webkit-transform: translate(50%, -2.2px);
+          transform: translate(50%, -2.2px);
+  width: 10px;
+  height: 10px;
+  background-color: #FFF;
+  visibility: hidden;
+  border-radius: 50%;
+}
+
+.container .config-panel {
+  border: 1px solid cyan;
+  width: 300px;
+  height: 100%;
+}
+
+.small-one {
+  color: #FFF;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: 0.125em;
+}
+/*# sourceMappingURL=style.css.map */

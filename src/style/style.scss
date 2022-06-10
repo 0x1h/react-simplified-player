@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
+
+@import "./utils/utils";
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #000;
+}
+
+.container {
+    width: 100%;
+    height: 80px;
+    background: rgba(34, 34, 34, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(22, 26, 71, 0.37);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 10px 10px 0 0;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    bottom: 0;
+    padding: 0 20px;
+
+    .song-content {
+        width: 300px;
+        height: 100%;
+        display: flex;
+        border: 1px solid red;
+        align-items: center;
+
+        .song_cover {
+            width: 50px;
+            height: 50px;
+            overflow: hidden;
+            border-radius: 5px;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .song-credits {
+            margin-left: 10px;
+            height: 100%;
+            padding: 20px 0;
+
+            .song_title {
+                color: #FFF;
+                cursor: default;
+                font-size: .8em;
+            }
+
+            .song_artist {
+                color: rgb(196, 196, 196);
+                font-size: .8em;
+                cursor: default;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    .player {
+        width: 100%;
+        height: 100%;
+        border: 1px solid yellow;
+        padding: 5px 10px;
+        @include Center();
+        flex-direction: column;
+        .buttons-wrapper {
+            @include Center();
+            justify-content: space-around;
+            max-width: 300px;
+            width: 100%;
+            height: 100px;
+            padding: 0 10px;
+
+            .control-btn {
+                @include Center();
+                cursor: pointer;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                background-color: #fff;
+            }
+            .secondary-btn{
+                cursor: pointer;
+                @include Center();
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                position: relative;
+            }
+        }
+
+        .player-dragger {
+            width: 100%;
+            height: 100%;
+            padding: 0 20%;
+            @include Center();
+            .timeline-wrapper{
+                width: 100%;
+                height: 5px;
+                border-radius: 50px;
+                background-color: #545454;
+                position: relative;
+                &:hover{
+                    .current-drag{
+                        background-color: #34eb6b;
+                        &::before{
+                            visibility: visible;
+                        }
+                    }
+                }
+                .current-drag{
+                    position: absolute;
+                    background-color: #FFF;
+                    left: 0;
+                    top: 0;
+                    height: 100%;
+                    border-radius: 50px;
+                    &::before{
+                        content: "";
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        transform: translate(50%,-2.2px);
+                        width: 10px;
+                        height: 10px;
+                        background-color: #FFF;
+                        visibility: hidden;
+                        border-radius: 50%;
+                    }
+                }
+            }
+        }
+    }
+
+    .config-panel {
+        border: 1px solid cyan;
+        width: 300px;
+        height: 100%;
+    }
+}
+
+.small-one{
+    color: #FFF;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.125em;
+}
