@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { FC } from 'react'
+import Volume, { VolumeProps } from './Volume'
 
-const ConfigPanel = () => {
+interface ConfigPanelProps extends VolumeProps {
+
+}
+
+const ConfigPanel: FC<ConfigPanelProps> = ({volume, setVolume}) => {
   return (
-    <div className='config-panel'></div>
+    <div className='config-panel'>
+      <Volume volume={volume} setVolume={setVolume}/>
+    </div>
   )
 }
 

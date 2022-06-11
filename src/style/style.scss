@@ -35,12 +35,17 @@ body {
     padding: 0 20px;
 
     .song-content {
+        .loader-wrapper{
+            position: relative;
+            width: 50px;
+            height: 50px;
+            margin-top: 20px;
+        }
         width: 300px;
         height: 100%;
         display: flex;
-        border: 1px solid red;
         align-items: center;
-
+        position: relative;
         .song_cover {
             width: 50px;
             height: 50px;
@@ -50,6 +55,11 @@ body {
             img {
                 width: 100%;
                 height: 100%;
+
+                &::selection {
+                    background: none;
+                    color: none;
+                }
             }
         }
 
@@ -79,10 +89,10 @@ body {
     .player {
         width: 100%;
         height: 100%;
-        border: 1px solid yellow;
         padding: 5px 10px;
         @include Center();
         flex-direction: column;
+
         .buttons-wrapper {
             @include Center();
             justify-content: space-around;
@@ -99,7 +109,8 @@ body {
                 border-radius: 50%;
                 background-color: #fff;
             }
-            .secondary-btn{
+
+            .secondary-btn {
                 cursor: pointer;
                 @include Center();
                 width: 30px;
@@ -114,33 +125,53 @@ body {
             height: 100%;
             padding: 0 20%;
             @include Center();
-            .timeline-wrapper{
+            .timelapse{
+                @include Center();
+                font-weight: 300;
+                font-size: 0.7em;
+                letter-spacing: 1px;
+                width: 50px;
+                cursor: default;
+                &::selection {
+                    background: none;
+                    color: none;
+                }
+                color: rgb(202, 202, 202);
+                &:nth-child(1){
+                    transform: translateX(-10px);
+                }
+            }
+            .timeline-wrapper {
                 width: 100%;
                 height: 5px;
                 border-radius: 50px;
                 background-color: #545454;
                 position: relative;
-                &:hover{
-                    .current-drag{
+
+                &:hover {
+                    .current-drag {
                         background-color: #34eb6b;
-                        &::before{
+
+                        &::before {
                             visibility: visible;
                         }
                     }
                 }
-                .current-drag{
+
+                .current-drag {
                     position: absolute;
                     background-color: #FFF;
                     left: 0;
                     top: 0;
                     height: 100%;
                     border-radius: 50px;
-                    &::before{
+
+                    &::before {
                         content: "";
                         position: absolute;
                         right: 0;
                         top: 0;
-                        transform: translate(50%,-2.2px);
+                        transform: translate(50%, -2.2px);
                         width: 10px;
                         height: 10px;
                         background-color: #FFF;
@@ -153,13 +184,68 @@ body {
     }
 
     .config-panel {
-        border: 1px solid cyan;
+        @include Center();
         width: 300px;
+        padding: 0 20px;
         height: 100%;
+
+        .volume-dragger {
+            @include Center();
+            width: 100%;
+            height: 100%;
+            .volume-icon-box{
+                width: 35px;
+                height: 35px;
+                @include Center();
+                &.pointer{
+                    cursor: pointer;
+                }
+            }
+            .volume-wrapper {
+                width: calc(100% - 20px);
+                height: 5px;
+                border-radius: 50px;
+                background-color: #545454;
+                position: relative;
+
+                &:hover {
+                    .current-volume {
+                        background-color: #34eb6b;
+
+                        &::before {
+                            visibility: visible;
+                        }
+                    }
+                }
+
+                .current-volume {
+                    position: absolute;
+                    background-color: #FFF;
+                    left: 0;
+                    top: 0;
+                    height: 100%;
+                    // width: 20%;
+                    border-radius: 50px;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        transform: translate(50%, -2.2px);
+                        width: 10px;
+                        height: 10px;
+                        background-color: #FFF;
+                        visibility: hidden;
+                        border-radius: 50%;
+                    }
+                }
+            }
+        }
     }
 }
 
-.small-one{
+.small-one {
     color: #FFF;
     position: absolute;
     top: 50%;

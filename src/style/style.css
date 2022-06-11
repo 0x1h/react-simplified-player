@@ -43,10 +43,17 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  border: 1px solid red;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  position: relative;
+}
+
+.container .song-content .loader-wrapper {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin-top: 20px;
 }
 
 .container .song-content .song_cover {
@@ -59,6 +66,16 @@ body {
 .container .song-content .song_cover img {
   width: 100%;
   height: 100%;
+}
+
+.container .song-content .song_cover img::-moz-selection {
+  background: none;
+  color: none;
+}
+
+.container .song-content .song_cover img::selection {
+  background: none;
+  color: none;
 }
 
 .container .song-content .song-credits {
@@ -86,7 +103,6 @@ body {
 .container .player {
   width: 100%;
   height: 100%;
-  border: 1px solid yellow;
   padding: 5px 10px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -170,6 +186,39 @@ body {
           justify-content: center;
 }
 
+.container .player .player-dragger .timelapse {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-weight: 300;
+  font-size: 0.7em;
+  letter-spacing: 1px;
+  width: 50px;
+  cursor: default;
+  color: #cacaca;
+}
+
+.container .player .player-dragger .timelapse::-moz-selection {
+  background: none;
+  color: none;
+}
+
+.container .player .player-dragger .timelapse::selection {
+  background: none;
+  color: none;
+}
+
+.container .player .player-dragger .timelapse:nth-child(1) {
+  -webkit-transform: translateX(-10px);
+          transform: translateX(-10px);
+}
+
 .container .player .player-dragger .timeline-wrapper {
   width: 100%;
   height: 5px;
@@ -210,9 +259,89 @@ body {
 }
 
 .container .config-panel {
-  border: 1px solid cyan;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   width: 300px;
+  padding: 0 20px;
   height: 100%;
+}
+
+.container .config-panel .volume-dragger {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.container .config-panel .volume-dragger .volume-icon-box {
+  width: 35px;
+  height: 35px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.container .config-panel .volume-dragger .volume-icon-box.pointer {
+  cursor: pointer;
+}
+
+.container .config-panel .volume-dragger .volume-wrapper {
+  width: calc(100% - 20px);
+  height: 5px;
+  border-radius: 50px;
+  background-color: #545454;
+  position: relative;
+}
+
+.container .config-panel .volume-dragger .volume-wrapper:hover .current-volume {
+  background-color: #34eb6b;
+}
+
+.container .config-panel .volume-dragger .volume-wrapper:hover .current-volume::before {
+  visibility: visible;
+}
+
+.container .config-panel .volume-dragger .volume-wrapper .current-volume {
+  position: absolute;
+  background-color: #FFF;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-radius: 50px;
+}
+
+.container .config-panel .volume-dragger .volume-wrapper .current-volume::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  -webkit-transform: translate(50%, -2.2px);
+          transform: translate(50%, -2.2px);
+  width: 10px;
+  height: 10px;
+  background-color: #FFF;
+  visibility: hidden;
+  border-radius: 50%;
 }
 
 .small-one {

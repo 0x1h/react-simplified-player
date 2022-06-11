@@ -1,39 +1,35 @@
 import { FC, useEffect, useRef, useState } from 'react'
+import { formatSeconds } from '../utils/formatSeconds'
+import { calculatePercentage } from "../utils/calculatePercentage"
 
 interface TimelineProps {
     currentDuration: number,
-    setDuration: (time: number) => void
+    setDuration: (time: number) => void,
+    current: number,
+    total_length: number
 }
 
-const PlayerDragger: FC<TimelineProps> = ({ currentDuration, setDuration }) => {
+export type DraggableType = React.MouseEvent<HTMLElement>
+
+const PlayerDragger: FC<TimelineProps> = ({ currentDuration, setDuration, current, total_length }) => {
     const timelineRef = useRef<HTMLDivElement>(null)
     const [beforeChangeTime, setBeforeChangeTime] = useState(currentDuration)
     const [pressed, setPressed] = useState(false)
 
+    // const onclick = (e: DraggableType) => {
+    //     const dragged: number = calculatePercentage(e)
+    //     setBeforeChangeTime(dragged)
+    // }
 
-    const calculatePercentage = (e: React.MouseEvent<HTMLElement>): number => {
-        const { left } = e.currentTarget.getBoundingClientRect();
-        const x = e.clientX - left;
-
-        const getWidth = window.getComputedStyle(timelineRef.current!)
-        const timeLineWidth = Number(getWidth.getPropertyValue("width").replace("px", ""))
-
-        return Number(((x / timeLineWidth) * 100).toFixed(2))
-    }
-
-    const onclick = (e: React.MouseEvent<HTMLElement>) => {
-        const dragged: number = calculatePercentage(e)
-        setBeforeChangeTime(dragged)
-    }
-    const onmousemove = (e: React.MouseEvent<HTMLElement>) => {
+    const onmousemove = (e: DraggableType) => {
         if (!pressed) return
-        const dragged: number = calculatePercentage(e)
+        if (beforeChangeTime >= 100) return
+
+        const dragged: number = calculatePercentage(e, timelineRef)
         setBeforeChangeTime(dragged)
     }
 
     const moveUpEvent = () => {
-        console.log('up');
-        
         if (pressed) {
             setPressed(false)
             setPressed(false)
@@ -43,7 +39,7 @@ const PlayerDragger: FC<TimelineProps> = ({ currentDuration, setDuration }) => {
 
     useEffect(() => {
         window.addEventListener("mouseup", moveUpEvent)
-        
+
         return () => {
             window.removeEventListener("mouseup", moveUpEvent)
         }
@@ -51,19 +47,23 @@ const PlayerDragger: FC<TimelineProps> = ({ currentDuration, setDuration }) => {
 
     return (
         <div className="player-dragger">
+            <p className='current-time timelapse'>{formatSeconds(current)}</p>
             <div className="timeline-wrapper"
                 ref={timelineRef}
                 onMouseDown={(e) => {
-                    setBeforeChangeTime(calculatePercentage(e))
+                    setBeforeChangeTime(calculatePercentage(e, timelineRef))
                     setPressed(true)
                 }}
                 onMouseMove={onmousemove}
-                
+
             >
                 <div className="current-drag" style={{
                     width: `${beforeChangeTime}%`
                 }}></div>
             </div>
+            <p className='full-time timelapse' style={{
+                transform: "translateX(10px)"
+            }}>{formatSeconds(total_length)}</p>
         </div>
     )
 }

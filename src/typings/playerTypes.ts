@@ -1,5 +1,6 @@
 export interface SongContentType {
     song_name?: string,
     artist?: string,
-    song_cover?: string
+    song_cover?: string,
+    isLoading: boolean
 }

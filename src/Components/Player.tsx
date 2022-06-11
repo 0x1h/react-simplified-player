@@ -11,7 +11,9 @@ interface PlayerProps {
 	currentDutaion: number
 	toggleButton: (key: keyof ConfigsTypes) => void,
 	repeat: () => void,
-	setDuration: (time: number) => void
+	setDuration: (time: number) => void,
+	current: number,
+	total_length: number
 }
 
 const Player: FC<PlayerProps> = (props) => {
@@ -45,7 +47,7 @@ const Player: FC<PlayerProps> = (props) => {
 					{props.loop === 2 && <FontAwesomeIcon icon={faRepeat} color={"#FFF"} />}
 				</div>
 			</div>
-			<PlayerDragger currentDuration={props.currentDutaion} setDuration={(time) => props.setDuration(time)}/>
+			<PlayerDragger currentDuration={props.currentDutaion} setDuration={(time) => props.setDuration(time)} current={props.current} total_length={props.total_length} />
 		</div>
 	)
 }
