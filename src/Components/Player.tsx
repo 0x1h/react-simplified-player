@@ -21,7 +21,9 @@ interface PlayerProps {
 const Player = forwardRef<HTMLAudioElement,PlayerProps>((props, ref) => {
 	return (
 		<div className='player'>
-			<audio src={props.src} ref={ref}></audio>
+			<audio src={props.src} ref={ref} style={{
+				visibility: "hidden"
+			}}/>
 			<div className="buttons-wrapper">
 				<div className="secondary-btn" onClick={() => props.toggleButton("shuffle")}>
 					{props.shuffle && <FontAwesomeIcon icon={faShuffle} color={"#FFF"} />}

@@ -18,14 +18,9 @@ const PlayerDragger: FC<TimelineProps> = ({ currentDuration, setDuration, curren
     const [beforeChangeTime, setBeforeChangeTime] = useState(currentDuration)
     const [pressed, setPressed] = useState(false)
 
-    // const onclick = (e: DraggableType) => {
-    //     const dragged: number = calculatePercentage(e)
-    //     setBeforeChangeTime(dragged)
-    // }
 
     useEffect(() => {
         if(pressed) return
-        // console.log();
         
         setBeforeChangeTime(currentDuration)
     }, [currentDuration])

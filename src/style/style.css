@@ -57,9 +57,20 @@ body {
 }
 
 .container .song-content .song_cover {
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   width: 50px;
   height: 50px;
   overflow: hidden;
+  background: linear-gradient(75deg, #0f0f0f, #271333, #311e3b);
   border-radius: 5px;
 }
 
@@ -84,14 +95,35 @@ body {
   padding: 20px 0;
 }
 
+.container .song-content .song-credits .board {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.container .song-content .song-credits .board .song_title {
+  display: inline-block;
+  color: #FFF;
+  padding-left: 100%;
+  -webkit-animation: move 5s linear infinite;
+          animation: move 5s linear infinite;
+  color: #FFF;
+  cursor: default;
+  font-size: .8em;
+}
+
 .container .song-content .song-credits .song_title {
   color: #FFF;
+  overflow: hidden;
   cursor: default;
   font-size: .8em;
 }
 
 .container .song-content .song-credits .song_artist {
   color: #c4c4c4;
+  overflow: hidden;
   font-size: .8em;
   cursor: default;
 }
@@ -288,7 +320,7 @@ body {
 }
 
 .container .config-panel .volume-dragger .volume-icon-box {
-  width: 35px;
+  width: 45px;
   height: 35px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -352,5 +384,27 @@ body {
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   font-size: 0.125em;
+}
+
+@-webkit-keyframes move {
+  0% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+  }
+  100% {
+    -webkit-transform: translate(-100%, 0);
+            transform: translate(-100%, 0);
+  }
+}
+
+@keyframes move {
+  0% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+  }
+  100% {
+    -webkit-transform: translate(-100%, 0);
+            transform: translate(-100%, 0);
+  }
 }
 /*# sourceMappingURL=style.css.map */

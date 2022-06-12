@@ -35,21 +35,26 @@ body {
     padding: 0 20px;
 
     .song-content {
-        .loader-wrapper{
+        .loader-wrapper {
             position: relative;
             width: 50px;
             height: 50px;
             margin-top: 20px;
         }
+
         width: 300px;
         height: 100%;
         display: flex;
         align-items: center;
         position: relative;
+
         .song_cover {
+            overflow: hidden;
+            @include Center();
             width: 50px;
             height: 50px;
             overflow: hidden;
+            background: linear-gradient(75deg, #0f0f0f, #271333, #311e3b);
             border-radius: 5px;
 
             img {
@@ -68,14 +73,33 @@ body {
             height: 100%;
             padding: 20px 0;
 
+            .board {
+                width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                box-sizing: border-box;
+
+                .song_title {
+                    display: inline-block;
+                    color: #FFF;
+                    padding-left: 100%;
+                    animation: move 5s linear infinite;
+                    color: #FFF;
+                    cursor: default;
+                    font-size: .8em;
+                }
+            }
+
             .song_title {
                 color: #FFF;
+                overflow: hidden;
                 cursor: default;
                 font-size: .8em;
             }
 
             .song_artist {
                 color: rgb(196, 196, 196);
+                overflow: hidden;
                 font-size: .8em;
                 cursor: default;
 
@@ -125,22 +149,27 @@ body {
             height: 100%;
             padding: 0 20%;
             @include Center();
-            .timelapse{
+
+            .timelapse {
                 @include Center();
                 font-weight: 300;
                 font-size: 0.7em;
                 letter-spacing: 1px;
                 width: 50px;
                 cursor: default;
+
                 &::selection {
                     background: none;
                     color: none;
                 }
+
                 color: rgb(202, 202, 202);
-                &:nth-child(1){
+
+                &:nth-child(1) {
                     transform: translateX(-10px);
                 }
             }
+
             .timeline-wrapper {
                 width: 100%;
                 height: 5px;
@@ -193,14 +222,17 @@ body {
             @include Center();
             width: 100%;
             height: 100%;
-            .volume-icon-box{
-                width: 35px;
+
+            .volume-icon-box {
+                width: 45px;
                 height: 35px;
                 @include Center();
-                &.pointer{
+
+                &.pointer {
                     cursor: pointer;
                 }
             }
+
             .volume-wrapper {
                 width: calc(100% - 20px);
                 height: 5px;
@@ -224,7 +256,6 @@ body {
                     left: 0;
                     top: 0;
                     height: 100%;
-                    // width: 20%;
                     border-radius: 50px;
 
                     &::before {
@@ -252,4 +283,9 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 0.125em;
+}
+
+@keyframes move {
+    0%   { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); }
 }

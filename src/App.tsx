@@ -5,7 +5,6 @@ import { initialConfig, ConfigsTypes, LoopType } from "./typings/initialStates";
 import ConfigPanel from "./Components/ConfigPanel";
 import "./style/style.css"
 import "./style/loader.css"
-import { calculateSkip } from "./utils/calculateSkip";
 
 export const repeatInitial: LoopType[] = ["none", "repeat", "repeat-song"]
 
@@ -17,7 +16,11 @@ const App = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [currentDuration, setCurrentDuration] = useState(0)
   const [volume, setVolume] = useState<number>(0.5)
+  const [currentIndex, setCurrentIndex] = useState(0)
   const [songData, setSongData] = useState([{
+    song_cover: "https://i.scdn.co/image/ab67616d0000b273861f0d79ff28c0206bb34474",
+    song_title: "Die Young dzaan kaiaiai",
+    song_artist: "Ke$ha",
     url: "https://cdns-preview-f.dzcdn.net/stream/c-ff22ec58ad90bb8192c694acd3bd9c6f-4.mp3"
   }])
   const [timeLapse, setTimeLapse] = useState({
@@ -41,10 +44,6 @@ const App = () => {
       }
     })
   }
-
-  // useEffect(() => {
-  //   calculateSkip(timeLapse.full_length, )
-  // }, [currentDuration])
   
 
   const onTimeEnd = () => {
@@ -80,7 +79,7 @@ const App = () => {
   
 
   useEffect(() => {
-    const audio = new Audio(songData[0].url)
+    const audio = new Audio(songData[currentIndex].url)
     const duration = audio.duration
 
     setTimeLapse((prev) => {
@@ -141,15 +140,15 @@ const App = () => {
     <div className="App" ref={playerRef}>
       <div className="container">
         <SongContent
-          song_cover={"https://upload.wikimedia.org/wikipedia/en/e/ea/Kesha_-_High_Road.png"}
-          song_name={"Rising Hell"}
-          artist={"Kesha"}
+          song_cover={songData[currentIndex].song_cover}
+          song_name={songData[currentIndex].song_title}
+          artist={songData[currentIndex].song_artist}
           isLoading={isLoading}
         />
         <Player
           {...control}
           ref={audioRef}
-          src={songData[0].url}
+          src={songData[currentIndex].url}
           setDuration={(time) => setCurrentDuration(time)}
           toggleButton={(key) => onControlChange(key)}
           repeat={onChangeLoop}
