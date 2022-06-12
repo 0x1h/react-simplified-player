@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay, faPause, faForwardStep, faBackwardStep, faShuffle, faRepeat } from '@fortawesome/free-solid-svg-icons'
 import { ConfigsTypes } from "../typings/initialStates"
 import PlayerDragger from './PlayerDragger'
-import { FC } from 'react'
+import { forwardRef } from 'react'
 
 interface PlayerProps {
 	playing: boolean,
@@ -13,12 +13,15 @@ interface PlayerProps {
 	repeat: () => void,
 	setDuration: (time: number) => void,
 	current: number,
-	total_length: number
+	total_length: number,
+	src: string,
+	skipToTime: (to: number) => void
 }
 
-const Player: FC<PlayerProps> = (props) => {
+const Player = forwardRef<HTMLAudioElement,PlayerProps>((props, ref) => {
 	return (
 		<div className='player'>
+			<audio src={props.src} ref={ref}></audio>
 			<div className="buttons-wrapper">
 				<div className="secondary-btn" onClick={() => props.toggleButton("shuffle")}>
 					{props.shuffle && <FontAwesomeIcon icon={faShuffle} color={"#FFF"} />}
@@ -47,9 +50,15 @@ const Player: FC<PlayerProps> = (props) => {
 					{props.loop === 2 && <FontAwesomeIcon icon={faRepeat} color={"#FFF"} />}
 				</div>
 			</div>
-			<PlayerDragger currentDuration={props.currentDutaion} setDuration={(time) => props.setDuration(time)} current={props.current} total_length={props.total_length} />
+			<PlayerDragger 
+				currentDuration={props.currentDutaion} 
+				setDuration={(time) => props.setDuration(time)} 
+				current={props.current} 
+				total_length={props.total_length} 
+				skipToTime={props.skipToTime}
+			/>
 		</div>
 	)
-}
+})
 
 export default Player

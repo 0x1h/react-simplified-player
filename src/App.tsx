@@ -5,6 +5,7 @@ import { initialConfig, ConfigsTypes, LoopType } from "./typings/initialStates";
 import ConfigPanel from "./Components/ConfigPanel";
 import "./style/style.css"
 import "./style/loader.css"
+import { calculateSkip } from "./utils/calculateSkip";
 
 export const repeatInitial: LoopType[] = ["none", "repeat", "repeat-song"]
 
@@ -12,6 +13,7 @@ const App = () => {
   const [control, setControl] = useState<ConfigsTypes>(initialConfig)
   const [loop, setLoop] = useState<number>(0)
   const playerRef = useRef<HTMLDivElement>(null)
+  const audioRef = useRef<HTMLAudioElement>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [currentDuration, setCurrentDuration] = useState(0)
   const [volume, setVolume] = useState<number>(0.5)
@@ -22,17 +24,28 @@ const App = () => {
     current: 0,
     full_length: 0
   })
-  const [currentSong, setCurrentSong] = useState(new Audio())
 
 
   const onTimeUpdate = () => {
+
+    const current = audioRef.current!.currentTime
+    const duration = audioRef.current!.duration
+
+    const percentage = ((current / duration) * 100).toFixed(1)
+    setCurrentDuration(Number(percentage))
+    
     setTimeLapse((prev) => {
       return {
         ...prev,
-        current: currentSong.currentTime
+        current: audioRef.current!.currentTime
       }
     })
   }
+
+  // useEffect(() => {
+  //   calculateSkip(timeLapse.full_length, )
+  // }, [currentDuration])
+  
 
   const onTimeEnd = () => {
     setControl((prev) => {
@@ -47,20 +60,20 @@ const App = () => {
     setTimeLapse((prev) => {
       return {
         ...prev,
-        full_length: currentSong.duration
+        full_length: audioRef.current!.duration
       }
     })
 
   }
 
   useEffect(() => {
-    currentSong.addEventListener("timeupdate", onTimeUpdate)  
-    currentSong.addEventListener("ended", onTimeEnd)
-    currentSong.addEventListener("loadedmetadata", onLoadAudio)
+    audioRef.current!.addEventListener("timeupdate", onTimeUpdate)  
+    audioRef.current!.addEventListener("ended", onTimeEnd)
+    audioRef.current!.addEventListener("loadedmetadata", onLoadAudio)
     return () => {
-      currentSong.removeEventListener("timeupdate", onTimeUpdate)  
-      currentSong.removeEventListener("ended", onTimeEnd)
-      currentSong.removeEventListener("loadedmetadata", onLoadAudio)
+      audioRef.current!.removeEventListener("timeupdate", onTimeUpdate)  
+      audioRef.current!.removeEventListener("ended", onTimeEnd)
+      audioRef.current!.removeEventListener("loadedmetadata", onLoadAudio)
 
     }
   })
@@ -78,23 +91,20 @@ const App = () => {
     })
 
     audio.volume = volume
-
-    setCurrentSong(audio) 
-    currentSong.load()
+    audioRef.current!.load()
   }, [])
 
   useEffect(() => {
-    if(control.playing) currentSong.play();
-    if(!control.playing) currentSong.pause();
+    if(control.playing) audioRef.current!.play();
+    if(!control.playing) audioRef.current!.pause();
   }, [control])
 
     
 
   useEffect(() => {
-    const audio = new Audio(songData[0].url)
-    audio.volume = volume
-
-    setCurrentSong(audio) 
+    audioRef.current!.volume = volume 
+    console.log(volume);
+    
   }, [volume])
 
   const onChangeLoop = () => {
@@ -138,19 +148,26 @@ const App = () => {
         />
         <Player
           {...control}
+          ref={audioRef}
+          src={songData[0].url}
           setDuration={(time) => setCurrentDuration(time)}
           toggleButton={(key) => onControlChange(key)}
           repeat={onChangeLoop}
+          skipToTime={(to) => {
+            audioRef.current!.currentTime = to
+            setCurrentDuration(to)
+          }}
           loop={loop}
           currentDutaion={currentDuration}
           total_length={timeLapse.full_length}
           current={timeLapse.current}
         />
-        <ConfigPanel volume={volume} setVolume={(volume) => setVolume(() => {
-          if(volume <= 0) return 0
-          if(volume >= 1) return 1
+        <ConfigPanel volume={volume} setVolume={(volumee) => setVolume(() => {
+          
+          if(volumee * 0.01 <= 0) return 0
+          if(volumee * 0.01 >= 1) return 1
 
-          return volume
+          return volumee * 0.01
         })} />
       </div>
     </div>

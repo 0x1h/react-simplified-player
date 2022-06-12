@@ -1,17 +1,19 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import { formatSeconds } from '../utils/formatSeconds'
 import { calculatePercentage } from "../utils/calculatePercentage"
+import { calculateSkip } from '../utils/calculateSkip'
 
 interface TimelineProps {
     currentDuration: number,
     setDuration: (time: number) => void,
     current: number,
-    total_length: number
+    total_length: number,
+    skipToTime: (to: number) => void
 }
 
 export type DraggableType = React.MouseEvent<HTMLElement>
 
-const PlayerDragger: FC<TimelineProps> = ({ currentDuration, setDuration, current, total_length }) => {
+const PlayerDragger: FC<TimelineProps> = ({ currentDuration, setDuration, current, total_length,skipToTime }) => {
     const timelineRef = useRef<HTMLDivElement>(null)
     const [beforeChangeTime, setBeforeChangeTime] = useState(currentDuration)
     const [pressed, setPressed] = useState(false)
@@ -20,6 +22,13 @@ const PlayerDragger: FC<TimelineProps> = ({ currentDuration, setDuration, curren
     //     const dragged: number = calculatePercentage(e)
     //     setBeforeChangeTime(dragged)
     // }
+
+    useEffect(() => {
+        if(pressed) return
+        // console.log();
+        
+        setBeforeChangeTime(currentDuration)
+    }, [currentDuration])
 
     const onmousemove = (e: DraggableType) => {
         if (!pressed) return
@@ -45,9 +54,11 @@ const PlayerDragger: FC<TimelineProps> = ({ currentDuration, setDuration, curren
         }
     })
 
+    
+
     return (
         <div className="player-dragger">
-            <p className='current-time timelapse'>{formatSeconds(current)}</p>
+            <p className='current-time timelapse'>{pressed ? formatSeconds(calculateSkip(total_length, beforeChangeTime)) : formatSeconds(current)}</p>
             <div className="timeline-wrapper"
                 ref={timelineRef}
                 onMouseDown={(e) => {
@@ -55,7 +66,10 @@ const PlayerDragger: FC<TimelineProps> = ({ currentDuration, setDuration, curren
                     setPressed(true)
                 }}
                 onMouseMove={onmousemove}
-
+                onMouseUp={() => {
+                    const skipTo: number =  calculateSkip(total_length, beforeChangeTime)
+                    skipToTime(skipTo)
+                }}
             >
                 <div className="current-drag" style={{
                     width: `${beforeChangeTime}%`
