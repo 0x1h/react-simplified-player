@@ -15,7 +15,9 @@ interface PlayerProps {
 	current: number,
 	total_length: number,
 	src: string,
-	skipToTime: (to: number) => void
+	skipToTime: (to: number) => void,
+	backSong: () => void,
+	forwardSong: () => void
 }
 
 const Player = forwardRef<HTMLAudioElement,PlayerProps>((props, ref) => {
@@ -30,7 +32,7 @@ const Player = forwardRef<HTMLAudioElement,PlayerProps>((props, ref) => {
 					{!props.shuffle && <FontAwesomeIcon icon={faShuffle} color={"#545454"} />}
 
 				</div>
-				<div className="secondary-btn">
+				<div className="secondary-btn" onClick={props.backSong}>
 					<FontAwesomeIcon icon={faBackwardStep} color={"#FFF"} />
 				</div>
 				<div className="control-btn" onClick={() => props.toggleButton("playing")}>
@@ -42,7 +44,7 @@ const Player = forwardRef<HTMLAudioElement,PlayerProps>((props, ref) => {
 							<FontAwesomeIcon icon={faPause} />
 					}
 				</div>
-				<div className="secondary-btn">
+				<div className="secondary-btn" onClick={props.forwardSong}>
 					<FontAwesomeIcon icon={faForwardStep} color={"#FFF"} />
 				</div>
 				<div className="secondary-btn" onClick={props.repeat}>
