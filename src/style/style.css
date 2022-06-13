@@ -8,7 +8,7 @@
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
@@ -37,6 +37,12 @@ body {
   padding: 0 20px;
 }
 
+@media screen and (max-width: 768px) {
+  .container {
+    height: 60px;
+  }
+}
+
 .container .song-content {
   width: 300px;
   height: 100%;
@@ -56,6 +62,12 @@ body {
   margin-top: 20px;
 }
 
+@media screen and (max-width: 768px) {
+  .container .song-content {
+    cursor: pointer;
+  }
+}
+
 .container .song-content .song_cover {
   overflow: hidden;
   display: -webkit-box;
@@ -72,6 +84,13 @@ body {
   overflow: hidden;
   background: linear-gradient(75deg, #0f0f0f, #271333, #311e3b);
   border-radius: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .container .song-content .song_cover {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .container .song-content .song_cover img {
@@ -95,6 +114,12 @@ body {
   padding: 20px 0;
 }
 
+@media screen and (max-width: 768px) {
+  .container .song-content .song-credits {
+    padding: 10px 0;
+  }
+}
+
 .container .song-content .song-credits .board {
   width: 100%;
   white-space: nowrap;
@@ -105,26 +130,26 @@ body {
 
 .container .song-content .song-credits .board .song_title {
   display: inline-block;
-  color: #FFF;
+  color: #fff;
   padding-left: 100%;
   -webkit-animation: move 5s linear infinite;
           animation: move 5s linear infinite;
-  color: #FFF;
+  color: #fff;
   cursor: default;
-  font-size: .8em;
+  font-size: 0.8em;
 }
 
 .container .song-content .song-credits .song_title {
-  color: #FFF;
+  color: #fff;
   overflow: hidden;
   cursor: default;
-  font-size: .8em;
+  font-size: 0.8em;
 }
 
 .container .song-content .song-credits .song_artist {
   color: #c4c4c4;
   overflow: hidden;
-  font-size: .8em;
+  font-size: 0.8em;
   cursor: default;
 }
 
@@ -151,6 +176,19 @@ body {
           flex-direction: column;
 }
 
+.container .player .mobile-view-timelapse {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .container .player {
+    width: 100px;
+    padding: 0;
+    position: absolute;
+    right: 0;
+  }
+}
+
 .container .player .buttons-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -167,6 +205,13 @@ body {
   width: 100%;
   height: 100px;
   padding: 0 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .container .player .buttons-wrapper {
+    max-width: none;
+    width: 50px;
+  }
 }
 
 .container .player .buttons-wrapper .control-btn {
@@ -207,6 +252,12 @@ body {
   position: relative;
 }
 
+@media screen and (max-width: 768px) {
+  .container .player .buttons-wrapper .secondary-btn {
+    display: none;
+  }
+}
+
 .container .player .buttons-wrapper .secondary-btn.forbidden {
   cursor: not-allowed;
 }
@@ -224,6 +275,12 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+  .container .player .player-dragger {
+    display: none;
+  }
 }
 
 .container .player .player-dragger .timelapse {
@@ -281,7 +338,7 @@ body {
 
 .container .player .player-dragger .timeline-wrapper .current-drag {
   position: absolute;
-  background-color: #FFF;
+  background-color: #fff;
   left: 0;
   top: 0;
   height: 100%;
@@ -297,7 +354,7 @@ body {
           transform: translate(50%, -2.2px);
   width: 10px;
   height: 10px;
-  background-color: #FFF;
+  background-color: #fff;
   visibility: hidden;
   border-radius: 50%;
 }
@@ -315,6 +372,12 @@ body {
   width: 300px;
   padding: 0 20px;
   height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .container .config-panel {
+    display: none;
+  }
 }
 
 .container .config-panel .volume-dragger {
@@ -367,7 +430,7 @@ body {
 
 .container .config-panel .volume-dragger .volume-wrapper .current-volume {
   position: absolute;
-  background-color: #FFF;
+  background-color: #fff;
   left: 0;
   top: 0;
   height: 100%;
@@ -383,13 +446,37 @@ body {
           transform: translate(50%, -2.2px);
   width: 10px;
   height: 10px;
-  background-color: #FFF;
+  background-color: #fff;
   visibility: hidden;
   border-radius: 50%;
 }
 
+.container .small-time-lapse {
+  overflow: hidden;
+  display: none;
+  width: 100%;
+  height: 2px;
+  background-color: #545454;
+  position: absolute;
+  border-radius: 50px;
+  bottom: 0;
+  left: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .container .small-time-lapse {
+    display: block;
+  }
+}
+
+.container .small-time-lapse .small-current-time {
+  background-color: #fff;
+  border-radius: 50px;
+  height: 100%;
+}
+
 .small-one {
-  color: #FFF;
+  color: #fff;
   position: absolute;
   top: 50%;
   left: 50%;

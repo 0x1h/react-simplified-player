@@ -7,11 +7,12 @@ import {
   faShuffle,
   faRepeat,
 } from "@fortawesome/free-solid-svg-icons";
-import { ConfigsTypes } from "../typings/initialStates";
+import { ConfigsTypes } from "../../typings/initialStates";
 import PlayerDragger from "./PlayerDragger";
 import { forwardRef } from "react";
+import { formatSeconds } from "../../utils/formatSeconds";
 
-interface PlayerProps {
+export interface PlayerProps {
   playing: boolean;
   shuffle: boolean;
   loop: number;
@@ -21,7 +22,7 @@ interface PlayerProps {
   setDuration: (time: number) => void;
   current: number;
   total_length: number;
-  src: string;
+  song_uri: string;
   skipToTime: (to: number) => void;
   backSong: () => void;
   forwardSong: () => void;
@@ -32,7 +33,7 @@ const Player = forwardRef<HTMLAudioElement, PlayerProps>((props, ref) => {
   return (
     <div className="player">
       <audio
-        src={props.src}
+        src={props.song_uri}
         ref={ref}
         style={{
           visibility: "hidden",
@@ -48,10 +49,15 @@ const Player = forwardRef<HTMLAudioElement, PlayerProps>((props, ref) => {
             <FontAwesomeIcon icon={faShuffle} color={"#545454"} />
           )}
         </div>
-        <div className={props.isSongLoaded ? "secondary-btn" : "secondary-btn forbidden"} onClick={() => {
-			if(!props.isSongLoaded) return
-			props.backSong()
-		}}>
+        <div
+          className={
+            props.isSongLoaded ? "secondary-btn" : "secondary-btn forbidden"
+          }
+          onClick={() => {
+            if (!props.isSongLoaded) return;
+            props.backSong();
+          }}
+        >
           <FontAwesomeIcon icon={faBackwardStep} color={"#FFF"} />
         </div>
         <div
@@ -59,7 +65,7 @@ const Player = forwardRef<HTMLAudioElement, PlayerProps>((props, ref) => {
             props.isSongLoaded ? "control-btn" : "control-btn forbidden"
           }
           onClick={() => {
-			if(!props.isSongLoaded) return
+            if (!props.isSongLoaded) return;
             props.toggleButton("playing");
           }}
         >
@@ -74,10 +80,15 @@ const Player = forwardRef<HTMLAudioElement, PlayerProps>((props, ref) => {
             <FontAwesomeIcon icon={faPause} />
           )}
         </div>
-        <div className={props.isSongLoaded ? "secondary-btn" : "secondary-btn forbidden"} onClick={() => {
-			if(!props.isSongLoaded) return
-			props.forwardSong()
-		}}>
+        <div
+          className={
+            props.isSongLoaded ? "secondary-btn" : "secondary-btn forbidden"
+          }
+          onClick={() => {
+            if (!props.isSongLoaded) return;
+            props.forwardSong();
+          }}
+        >
           <FontAwesomeIcon icon={faForwardStep} color={"#FFF"} />
         </div>
         <div className="secondary-btn" onClick={props.repeat}>
@@ -92,6 +103,22 @@ const Player = forwardRef<HTMLAudioElement, PlayerProps>((props, ref) => {
             <FontAwesomeIcon icon={faRepeat} color={"#FFF"} />
           )}
         </div>
+      </div>
+      <div className="mobile-view-timelapse">
+        <p
+          style={{
+            fontSize: "0.8em",
+          }}
+        >
+          {formatSeconds(props.current)}
+        </p>
+        <p
+          style={{
+            fontSize: "0.8em",
+          }}
+        >
+          {formatSeconds(props.total_length)}
+        </p>
       </div>
       <PlayerDragger
         isSongLoaded={props.isSongLoaded}

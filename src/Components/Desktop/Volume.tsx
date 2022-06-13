@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faVolumeHigh, faVolumeLow, faVolumeOff, faVolumeXmark, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 import { FC, useEffect, useRef, useState } from 'react'
-import { calculatePercentage } from '../utils/calculatePercentage'
+import { calculatePercentage } from '../../utils/calculatePercentage'
 import { DraggableType } from './PlayerDragger'
 
 export interface VolumeProps {

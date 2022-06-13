@@ -1,4 +1,4 @@
-import { DraggableType } from "../Components/PlayerDragger";
+import { DraggableType } from "../Components/Desktop/PlayerDragger";
 
 export const calculatePercentage = (e: DraggableType, element: any): number => {
     const { left } = e.currentTarget.getBoundingClientRect();

@@ -11,3 +11,8 @@ export interface QueueType {
   song_artist?: string;
   url: string;
 }
+
+interface PlayerProps {
+    mainColor?: string,
+    
+}

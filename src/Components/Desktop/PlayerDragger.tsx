@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef, useState } from "react";
-import { formatSeconds } from "../utils/formatSeconds";
-import { calculatePercentage } from "../utils/calculatePercentage";
-import { calculateSkip } from "../utils/calculateSkip";
+import { formatSeconds } from "../../utils/formatSeconds";
+import { calculatePercentage } from "../../utils/calculatePercentage";
+import { calculateSkip } from "../../utils/calculateSkip";
 
 interface TimelineProps {
   currentDuration: number;
@@ -95,6 +95,7 @@ const PlayerDragger: FC<TimelineProps> = (props) => {
       >
         {formatSeconds(props.total_length)}
       </p>
+      
     </div>
   );
 };
