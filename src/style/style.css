@@ -186,6 +186,10 @@ body {
   background-color: #fff;
 }
 
+.container .player .buttons-wrapper .control-btn.forbidden {
+  cursor: not-allowed;
+}
+
 .container .player .buttons-wrapper .secondary-btn {
   cursor: pointer;
   display: -webkit-box;
@@ -201,6 +205,10 @@ body {
   height: 30px;
   border-radius: 50%;
   position: relative;
+}
+
+.container .player .buttons-wrapper .secondary-btn.forbidden {
+  cursor: not-allowed;
 }
 
 .container .player .player-dragger {
@@ -257,6 +265,10 @@ body {
   border-radius: 50px;
   background-color: #545454;
   position: relative;
+}
+
+.container .player .player-dragger .timeline-wrapper.forbidden {
+  cursor: not-allowed;
 }
 
 .container .player .player-dragger .timeline-wrapper:hover .current-drag {

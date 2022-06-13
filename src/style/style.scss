@@ -132,6 +132,9 @@ body {
                 height: 30px;
                 border-radius: 50%;
                 background-color: #fff;
+                &.forbidden{
+                    cursor: not-allowed;
+                }
             }
 
             .secondary-btn {
@@ -141,6 +144,9 @@ body {
                 height: 30px;
                 border-radius: 50%;
                 position: relative;
+                &.forbidden{
+                    cursor: not-allowed;
+                }
             }
         }
 
@@ -176,7 +182,9 @@ body {
                 border-radius: 50px;
                 background-color: #545454;
                 position: relative;
-
+                &.forbidden{
+                    cursor: not-allowed;
+                }
                 &:hover {
                     .current-drag {
                         background-color: #34eb6b;

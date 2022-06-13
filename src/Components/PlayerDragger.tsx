@@ -1,80 +1,102 @@
-import { FC, useEffect, useRef, useState } from 'react'
-import { formatSeconds } from '../utils/formatSeconds'
-import { calculatePercentage } from "../utils/calculatePercentage"
-import { calculateSkip } from '../utils/calculateSkip'
+import { FC, useEffect, useRef, useState } from "react";
+import { formatSeconds } from "../utils/formatSeconds";
+import { calculatePercentage } from "../utils/calculatePercentage";
+import { calculateSkip } from "../utils/calculateSkip";
 
 interface TimelineProps {
-    currentDuration: number,
-    setDuration: (time: number) => void,
-    current: number,
-    total_length: number,
-    skipToTime: (to: number) => void
+  currentDuration: number;
+  setDuration: (time: number) => void;
+  isSongLoaded: boolean;
+  current: number;
+  total_length: number;
+  skipToTime: (to: number) => void;
 }
 
-export type DraggableType = React.MouseEvent<HTMLElement>
+export type DraggableType = React.MouseEvent<HTMLElement>;
 
-const PlayerDragger: FC<TimelineProps> = ({ currentDuration, setDuration, current, total_length,skipToTime }) => {
-    const timelineRef = useRef<HTMLDivElement>(null)
-    const [beforeChangeTime, setBeforeChangeTime] = useState(currentDuration)
-    const [pressed, setPressed] = useState(false)
+const PlayerDragger: FC<TimelineProps> = (props) => {
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const [beforeChangeTime, setBeforeChangeTime] = useState(
+    props.currentDuration
+  );
+  const [pressed, setPressed] = useState(false);
 
+  useEffect(() => {
+    if (pressed) return;
 
-    useEffect(() => {
-        if(pressed) return
-        
-        setBeforeChangeTime(currentDuration)
-    }, [currentDuration])
+    setBeforeChangeTime(props.currentDuration);
+  }, [props.currentDuration]);
 
-    const onmousemove = (e: DraggableType) => {
-        if (!pressed) return
-        if (beforeChangeTime >= 100) return
+  const onmousemove = (e: DraggableType) => {
+    if (!pressed) return;
+    if (beforeChangeTime >= 100) return;
+    if (!props.isSongLoaded) return;
 
-        const dragged: number = calculatePercentage(e, timelineRef)
-        setBeforeChangeTime(dragged)
+    const dragged: number = calculatePercentage(e, timelineRef);
+    setBeforeChangeTime(dragged);
+  };
+
+  const moveUpEvent = () => {
+    if (pressed) {
+      setPressed(false);
+      setPressed(false);
+      props.setDuration(beforeChangeTime);
     }
+  };
 
-    const moveUpEvent = () => {
-        if (pressed) {
-            setPressed(false)
-            setPressed(false)
-            setDuration(beforeChangeTime)
-        }
-    }
+  useEffect(() => {
+    window.addEventListener("mouseup", moveUpEvent);
 
-    useEffect(() => {
-        window.addEventListener("mouseup", moveUpEvent)
+    return () => {
+      window.removeEventListener("mouseup", moveUpEvent);
+    };
+  });
 
-        return () => {
-            window.removeEventListener("mouseup", moveUpEvent)
-        }
-    })
+  return (
+    <div className="player-dragger" draggable={false}>
+      <p className="current-time timelapse" draggable={false}>
+        {pressed
+          ? formatSeconds(calculateSkip(props.total_length, beforeChangeTime))
+          : formatSeconds(props.current)}
+      </p>
+      <div
+        className={props.isSongLoaded ? "timeline-wrapper" : "timeline-wrapper forbidden"}
+        ref={timelineRef}
+        onMouseDown={(e) => {
+          if (!props.isSongLoaded) return;
 
-    
+          setBeforeChangeTime(calculatePercentage(e, timelineRef));
+          setPressed(true);
+        }}
+        onMouseMove={onmousemove}
+        onMouseUp={() => {
+          if (!props.isSongLoaded) return;
 
-    return (
-        <div className="player-dragger">
-            <p className='current-time timelapse'>{pressed ? formatSeconds(calculateSkip(total_length, beforeChangeTime)) : formatSeconds(current)}</p>
-            <div className="timeline-wrapper"
-                ref={timelineRef}
-                onMouseDown={(e) => {
-                    setBeforeChangeTime(calculatePercentage(e, timelineRef))
-                    setPressed(true)
-                }}
-                onMouseMove={onmousemove}
-                onMouseUp={() => {
-                    const skipTo: number =  calculateSkip(total_length, beforeChangeTime)
-                    skipToTime(skipTo)
-                }}
-            >
-                <div className="current-drag" style={{
-                    width: `${beforeChangeTime}%`
-                }}></div>
-            </div>
-            <p className='full-time timelapse' style={{
-                transform: "translateX(10px)"
-            }}>{formatSeconds(total_length)}</p>
-        </div>
-    )
-}
+          const skipTo: number = calculateSkip(
+            props.total_length,
+            beforeChangeTime
+          );
+          props.skipToTime(skipTo);
+        }}
+      >
+        <div
+          className="current-drag"
+          style={{
+            width: `${beforeChangeTime}%`,
+          }}
+        ></div>
+      </div>
+      <p
+        className="full-time timelapse"
+        style={{
+          transform: "translateX(10px)",
+        }}
+        draggable={false}
+      >
+        {formatSeconds(props.total_length)}
+      </p>
+    </div>
+  );
+};
 
-export default PlayerDragger
+export default PlayerDragger;
