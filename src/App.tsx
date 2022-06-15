@@ -7,6 +7,7 @@ import { loopSong } from "./utils/loopSong";
 import { loadSongAndPlay } from "./utils/loadSongAndPlay";
 import { QueueType } from "./typings/playerTypes";
 import MobilePlayer from "./Components/Mobile/MobilePlayer";
+import { song } from "./test";
 import "./style/style.css";
 import "./style/loader.css";
 import "./style/mobile-style.css";
@@ -18,50 +19,37 @@ const ReactSimplifiedPlayer = () => {
   const [loop, setLoop] = useState<number>(0);
   const playerRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const mobileViewRef = useRef<HTMLAudioElement>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentDuration, setCurrentDuration] = useState(0);
   const [volume, setVolume] = useState<number>(0.5);
   const [windowWidth, setWindowWith] = useState(window.innerWidth);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [popUp, setPopUp] = useState(false)
-  const [songData, setSongData] = useState<QueueType[]>([
-    {
-      song_cover:
-        "https://i.scdn.co/image/ab67616d0000b273861f0d79ff28c0206bb34474",
-      song_title: "Die Young ",
-      song_artist: "Ke$ha",
-      url: "https://cdns-preview-f.dzcdn.net/stream/c-ff22ec58ad90bb8192c694acd3bd9c6f-4.mp3",
-    },
-    {
-      song_cover:
-        "https://upload.wikimedia.org/wikipedia/en/f/f8/Kesha_-_Rainbow_%28Official_Album_Cover%29.png",
-      song_title: "Praying",
-      song_artist: "Kesha",
-      url: "https://cdns-preview-4.dzcdn.net/stream/c-43f197ffaae18e3b1d91f067fbd30bf7-6.mp3",
-    },
-    {
-      song_cover: "",
-      song_title: "",
-      song_artist: "",
-      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-    },
-  ]);
+  const [popUp, setPopUp] = useState(false);
+  const [songData, setSongData] = useState<QueueType[]>(song);
+  const [currentRef, setCurrentRef] = useState(audioRef);
+
   const [timeLapse, setTimeLapse] = useState({
     current: 0,
     full_length: 0,
   });
-  
+
+  useEffect(() => {
+    if(windowWidth <= 768) return setCurrentRef(mobileViewRef)
+    
+    setCurrentRef(audioRef)
+  }, [windowWidth])
 
   const onEndedAudio = () => {
     if (repeatInitial[loop] === "none") return;
 
     if (repeatInitial[loop] === "repeat") {
       setCurrentIndex((prev) => loopSong(prev, songData));
-      return loadSongAndPlay(audioRef);
+      return loadSongAndPlay(currentRef);
     }
 
     if (repeatInitial[loop] === "repeat-song") {
-      audioRef.current!.currentTime = 0;
+      currentRef.current!.currentTime = 0;
       setControl((prev) => {
         return {
           ...prev,
@@ -72,8 +60,8 @@ const ReactSimplifiedPlayer = () => {
   };
 
   const onTimeUpdate = () => {
-    const current = audioRef.current!.currentTime;
-    const duration = audioRef.current!.duration;
+    const current = currentRef.current?.currentTime as number;
+    const duration = currentRef.current?.duration as number;
 
     const percentage = ((current / duration) * 100).toFixed(1);
     setCurrentDuration(Number(percentage));
@@ -81,7 +69,7 @@ const ReactSimplifiedPlayer = () => {
     setTimeLapse((prev) => {
       return {
         ...prev,
-        current: audioRef.current!.currentTime,
+        current: currentRef.current?.currentTime as number,
       };
     });
   };
@@ -93,7 +81,7 @@ const ReactSimplifiedPlayer = () => {
         playing: false,
       };
     });
-    loadSongAndPlay(audioRef);
+    loadSongAndPlay(currentRef);
     setControl((prev) => {
       return {
         ...prev,
@@ -116,7 +104,7 @@ const ReactSimplifiedPlayer = () => {
     setTimeLapse((prev) => {
       return {
         ...prev,
-        full_length: audioRef.current!.duration,
+        full_length: currentRef.current?.duration as number,
       };
     });
     setIsLoading(false);
@@ -125,19 +113,18 @@ const ReactSimplifiedPlayer = () => {
   const onWindowResize = () => {
     setWindowWith(window.innerWidth);
   };
-  
 
   useEffect(() => {
-    audioRef.current?.addEventListener("timeupdate", onTimeUpdate);
-    audioRef.current?.addEventListener("ended", onTimeEnd);
-    audioRef.current?.addEventListener("canplaythrough", onLoadAudio);
-    audioRef.current?.addEventListener("ended", onEndedAudio, false);
+    currentRef.current?.addEventListener("timeupdate", onTimeUpdate);
+    currentRef.current?.addEventListener("ended", onTimeEnd);
+    currentRef.current?.addEventListener("canplaythrough", onLoadAudio);
+    currentRef.current?.addEventListener("ended", onEndedAudio, false);
     window.addEventListener("resize", onWindowResize);
     return () => {
-      audioRef.current?.removeEventListener("timeupdate", onTimeUpdate);
-      audioRef.current?.removeEventListener("ended", onTimeEnd);
-      audioRef.current?.removeEventListener("canplaythrough", onLoadAudio);
-      audioRef.current?.removeEventListener("ended", onEndedAudio, false);
+      currentRef.current?.removeEventListener("timeupdate", onTimeUpdate);
+      currentRef.current?.removeEventListener("ended", onTimeEnd);
+      currentRef.current?.removeEventListener("canplaythrough", onLoadAudio);
+      currentRef.current?.removeEventListener("ended", onEndedAudio, false);
       window.removeEventListener("resize", onWindowResize);
     };
   });
@@ -156,7 +143,7 @@ const ReactSimplifiedPlayer = () => {
     });
 
     audio.volume = volume;
-    audioRef.current!.load();
+    currentRef.current!.load();
     setControl((prev) => {
       return {
         ...prev,
@@ -166,12 +153,12 @@ const ReactSimplifiedPlayer = () => {
   }, []);
 
   useEffect(() => {
-    if (control.playing) audioRef.current!.play();
-    if (!control.playing) audioRef.current!.pause();
+    if (control.playing) currentRef.current?.play();
+    if (!control.playing) currentRef.current?.pause();
   }, [control]);
 
   useEffect(() => {
-    audioRef.current!.volume = volume;
+    currentRef.current!.volume = volume;
   }, [volume]);
 
   const onChangeLoop = () => {
@@ -233,7 +220,7 @@ const ReactSimplifiedPlayer = () => {
     <>
       <div className="container" ref={playerRef}>
         <SongContent
-        openPlayer={() => setPopUp(true)}
+          openPlayer={() => setPopUp(true)}
           windowWidth={windowWidth}
           song_cover={
             songData[currentIndex]?.song_cover == null
@@ -257,13 +244,13 @@ const ReactSimplifiedPlayer = () => {
           isSongLoaded={songData.length !== 0 ?? false}
           backSong={backToSong}
           forwardSong={forwardSong}
-          ref={audioRef}
+          ref={currentRef}
           song_uri={songData[currentIndex]?.url}
           setDuration={(time) => setDuration(time)}
           toggleButton={(key) => onControlChange(key)}
           repeat={onChangeLoop}
           skipToTime={(to) => {
-            audioRef.current!.currentTime = to;
+            currentRef.current!.currentTime = to;
             setCurrentDuration(to);
           }}
           loop={loop}
@@ -291,45 +278,44 @@ const ReactSimplifiedPlayer = () => {
           />
         </div>
       </div>
-      {
-        windowWidth <= 768 &&
+      {windowWidth <= 768 && (
         <MobilePlayer
-        {...control}
-        onPopUp={() => setPopUp(false)}
-        isSongLoaded={songData.length !== 0 ?? false}
+          {...control}
+          onPopUp={() => setPopUp(false)}
+          isSongLoaded={songData.length !== 0 ?? false}
           backSong={backToSong}
           forwardSong={forwardSong}
           popUp={popUp}
-          ref={audioRef}
+          ref={mobileViewRef}
           song_uri={songData[currentIndex]?.url}
           setDuration={(time) => setDuration(time)}
           toggleButton={(key) => onControlChange(key)}
           repeat={onChangeLoop}
           skipToTime={(to) => {
-            audioRef.current!.currentTime = to;
+            currentRef.current!.currentTime = to;
             setCurrentDuration(to);
           }}
           loop={loop}
           currentDutaion={currentDuration}
           total_length={timeLapse.full_length}
           current={timeLapse.current}
-        src={
-          songData[currentIndex]?.song_cover === undefined
-            ? ""
-            : (songData[currentIndex]?.song_cover as string)
-        }
-        song_name={
-          songData[currentIndex]?.song_title === undefined
-            ? ""
-            : songData[currentIndex].song_title?.trim()
-        }
-        song_artist={
-          songData[currentIndex]?.song_artist?.trim() === undefined
-            ? ""
-            : songData[currentIndex].song_artist?.trim()
-        }
-      />
-      }
+          src={
+            songData[currentIndex]?.song_cover === undefined
+              ? ""
+              : (songData[currentIndex]?.song_cover as string)
+          }
+          song_name={
+            songData[currentIndex]?.song_title === undefined
+              ? ""
+              : songData[currentIndex].song_title?.trim()
+          }
+          song_artist={
+            songData[currentIndex]?.song_artist?.trim() === undefined
+              ? ""
+              : songData[currentIndex].song_artist?.trim()
+          }
+        />
+      )}
     </>
   );
 };
