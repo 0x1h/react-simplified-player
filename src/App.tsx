@@ -30,6 +30,7 @@ const ReactSimplifiedPlayer = () => {
   const [popUp, setPopUp] = useState(false);
   const [songData, setSongData] = useState<QueueType[]>(song);
   const [currentRef, setCurrentRef] = useState(audioRef);
+  const [playingSongIndex, setPlayingSongIndex] = useState()
 
   const [timeLapse, setTimeLapse] = useState({
     current: 0,
@@ -75,22 +76,6 @@ const ReactSimplifiedPlayer = () => {
       };
     });
   };
-
-  useEffect(() => {
-    setControl((prev) => {
-      return {
-        ...prev,
-        playing: false,
-      };
-    });
-    loadSongAndPlay(currentRef);
-    setControl((prev) => {
-      return {
-        ...prev,
-        playing: true,
-      };
-    });
-  }, [currentIndex]);
 
   const onTimeEnd = () => {
     setControl((prev) => {
@@ -212,6 +197,12 @@ const ReactSimplifiedPlayer = () => {
         };
       });
     }
+
+    if(index < currentIndex){
+      setCurrentIndex(prev => prev - 1)  
+    }
+    console.log(currentIndex);
+    
 
     setSongData((prev) => {
       return prev.filter((_, i) => i !== index);
@@ -364,14 +355,19 @@ const ReactSimplifiedPlayer = () => {
           songs={songData}
           removeSong={removeSong}
           playSong={(index) => {
-            setCurrentIndex(index);
-            loadSongAndPlay(currentRef);
             setControl((prev) => {
               return {
                 ...prev,
-                playing: true
-              }
-            })
+                playing: false,
+              };
+            });
+            setCurrentIndex(index);
+            setControl((prev) => {
+              return {
+                ...prev,
+                playing: true,
+              };
+            });
           }}
           queuePopUp={isOpenQueue}
         />
