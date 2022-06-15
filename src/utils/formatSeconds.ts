@@ -1,4 +1,4 @@
-export const formatSeconds = (secs: number) => {
+export const formatSeconds = (secs: number): string => {
     let hr = Math.floor(Number(secs) / 3600);
     let min = String(Math.floor((Number(secs) - (hr * 3600)) / 60));
     let sec = String(Math.floor(Number(secs) - (hr * 3600) - (Number(min) * 60)));

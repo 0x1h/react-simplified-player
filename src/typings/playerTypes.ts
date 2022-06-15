@@ -8,6 +8,7 @@ export interface SongContentType {
 export interface QueueType {
   song_cover?: string;
   song_title?: string;
+  id: string
   song_artist?: string;
   url: string;
 }

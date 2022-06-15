@@ -29,6 +29,7 @@ body {
   position: absolute;
   right: 0;
   display: flex;
+  z-index: 99;
   align-items: center;
   bottom: 0;
   padding: 0 20px;
@@ -59,7 +60,7 @@ body {
       height: 50px;
       overflow: hidden;
       background: linear-gradient(75deg, #0f0f0f, #271333, #311e3b);
-      border-radius: 5px;
+      border-radius: 10px;
       @media screen and(max-width: 768px) {
         width: 40px;
         height: 40px;

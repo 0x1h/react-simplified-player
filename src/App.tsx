@@ -7,6 +7,7 @@ import { loopSong } from "./utils/loopSong";
 import { loadSongAndPlay } from "./utils/loadSongAndPlay";
 import { QueueType } from "./typings/playerTypes";
 import MobilePlayer from "./Components/Mobile/MobilePlayer";
+import Queue from "./Components/Desktop/Queue";
 import { song } from "./test";
 import "./style/style.css";
 import "./style/loader.css";
@@ -22,6 +23,7 @@ const ReactSimplifiedPlayer = () => {
   const mobileViewRef = useRef<HTMLAudioElement>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentDuration, setCurrentDuration] = useState(0);
+  const [isOpenQueue, setIsOpenQueue] = useState(false);
   const [volume, setVolume] = useState<number>(0.5);
   const [windowWidth, setWindowWith] = useState(window.innerWidth);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -35,10 +37,10 @@ const ReactSimplifiedPlayer = () => {
   });
 
   useEffect(() => {
-    if(windowWidth <= 768) return setCurrentRef(mobileViewRef)
-    
-    setCurrentRef(audioRef)
-  }, [windowWidth])
+    if (windowWidth <= 768) return setCurrentRef(mobileViewRef);
+
+    setCurrentRef(audioRef);
+  }, [windowWidth]);
 
   const onEndedAudio = () => {
     if (repeatInitial[loop] === "none") return;
@@ -194,6 +196,44 @@ const ReactSimplifiedPlayer = () => {
     });
   };
 
+  const removeSong = (index: number) => {
+    if (currentIndex === index && control.playing) {
+      setControl((prev) => {
+        return {
+          ...prev,
+          playing: false,
+        };
+      });
+      loadSongAndPlay(currentRef);
+      setControl((prev) => {
+        return {
+          ...prev,
+          playing: true,
+        };
+      });
+    }
+
+    setSongData((prev) => {
+      return prev.filter((_, i) => i !== index);
+    });
+  };
+
+  useEffect(() => {
+    if (songData.length <= 0) {
+      setControl((prev) => {
+        return {
+          ...prev,
+          playing: false,
+        };
+      });
+      setTimeLapse({
+        current: 0,
+        full_length: 0,
+      });
+      setCurrentDuration(0);
+    }
+  }, [songData]);
+
   const onControlChange = (key: keyof ConfigsTypes) => {
     const opositeValue: boolean = !control[key];
 
@@ -256,9 +296,10 @@ const ReactSimplifiedPlayer = () => {
           loop={loop}
           currentDutaion={currentDuration}
           total_length={timeLapse.full_length}
-          current={timeLapse.current}
+          current={timeLapse.current} 
         />
         <ConfigPanel
+          openQueue={() => setIsOpenQueue(true)}
           volume={volume}
           setVolume={(volumee) =>
             setVolume(() => {
@@ -314,6 +355,25 @@ const ReactSimplifiedPlayer = () => {
               ? ""
               : songData[currentIndex].song_artist?.trim()
           }
+        />
+      )}
+      {windowWidth > 768 && (
+        <Queue
+        currentIndex={currentIndex}
+          onQueueOpen={(bool) => setIsOpenQueue(bool)}
+          songs={songData}
+          removeSong={removeSong}
+          playSong={(index) => {
+            setCurrentIndex(index);
+            loadSongAndPlay(currentRef);
+            setControl((prev) => {
+              return {
+                ...prev,
+                playing: true
+              }
+            })
+          }}
+          queuePopUp={isOpenQueue}
         />
       )}
     </>

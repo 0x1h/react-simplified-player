@@ -6,10 +6,11 @@ import { DraggableType } from './PlayerDragger'
 
 export interface VolumeProps {
 	volume: number,
-	setVolume: (volume: number) => void
+	setVolume: (volume: number) => void,
+	openQueue: () => void
 }
 
-const Volume: FC<VolumeProps> = ({ volume, setVolume }) => {
+const Volume: FC<VolumeProps> = ({ volume, setVolume, openQueue }) => {
 	const volumeRef = useRef<HTMLDivElement>(null)
 	const [pressed, setPressed] = useState<boolean>(false)
 	const [beforeValue, setBeforeValue] = useState<number>(0)
@@ -47,7 +48,7 @@ const Volume: FC<VolumeProps> = ({ volume, setVolume }) => {
 
 	return (
 		<div className='volume-dragger'>
-			<div className="volume-icon-box pointer">
+			<div className="volume-icon-box pointer" onClick={openQueue}>
 				<FontAwesomeIcon icon={faLayerGroup} color={"#FFF"} />
 			</div>
 			<div className="volume-icon-box">

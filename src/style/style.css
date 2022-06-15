@@ -30,6 +30,7 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  z-index: 99;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -83,7 +84,7 @@ body {
   height: 50px;
   overflow: hidden;
   background: linear-gradient(75deg, #0f0f0f, #271333, #311e3b);
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 @media screen and (max-width: 768px) {
