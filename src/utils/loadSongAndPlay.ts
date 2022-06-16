@@ -3,6 +3,9 @@ import { RefObject } from "react";
 export const loadSongAndPlay = (audioRef: RefObject<HTMLAudioElement>) => {
   const playPromise = audioRef.current?.play();
 
+  audioRef.current?.pause()
+  audioRef.current?.load()
+
   var isPlaying =
     audioRef.current!.currentTime > 0 &&
     !audioRef.current!.paused &&

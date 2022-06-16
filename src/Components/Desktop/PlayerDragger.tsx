@@ -62,14 +62,14 @@ const PlayerDragger: FC<TimelineProps> = (props) => {
       <div
         className={props.isSongLoaded ? "timeline-wrapper" : "timeline-wrapper forbidden"}
         ref={timelineRef}
-        onMouseDown={(e) => {
+        onPointerDown={(e) => {
           if (!props.isSongLoaded) return;
 
           setBeforeChangeTime(calculatePercentage(e, timelineRef));
           setPressed(true);
         }}
-        onMouseMove={onmousemove}
-        onMouseUp={() => {
+        onPointerMove={onmousemove}
+        onPointerUp={() => {
           if (!props.isSongLoaded) return;
 
           const skipTo: number = calculateSkip(

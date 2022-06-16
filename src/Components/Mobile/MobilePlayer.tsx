@@ -4,12 +4,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLayerGroup } from "@fortawesome/free-solid-svg-icons";
 import SongInfoView, { SongViewProps } from "./SongInfoView";
 import Player, {PlayerProps} from "../Desktop/Player"
+import { QueueProps } from "../Desktop/Queue";
+import Queue from "../Desktop/Queue";
 
 
-interface MobilePlayerProps extends PlayerProps, SongViewProps{
+interface MobilePlayerProps extends PlayerProps, SongViewProps, QueueProps{
   src: string;
   popUp: boolean,
-  onPopUp: () => void
+  onPopUp: () => void,
+  openQueue: () => void
 }
 
 const MobilePlayer= forwardRef<HTMLAudioElement, MobilePlayerProps>((props, ref) => {
@@ -40,11 +43,12 @@ const MobilePlayer= forwardRef<HTMLAudioElement, MobilePlayerProps>((props, ref)
           </div>
         </div>
         <div className="extra-icons">
-          <div className="queue-opener-icon">
-          <FontAwesomeIcon icon={faLayerGroup} color={"#FFF"} />
+          <div className="queue-opener-icon" onClick={props.openQueue}>
+            <FontAwesomeIcon icon={faLayerGroup} color={"#FFF"} />
           </div>
         </div>
       </div>
+      <Queue {...props}/>
     </div>
   );
 })

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import SongContent from "./Components/Desktop/SongContent";
 import Player from "./Components/Desktop/Player";
 import { initialConfig, ConfigsTypes, LoopType } from "./typings/initialStates";
@@ -7,6 +7,7 @@ import { loopSong } from "./utils/loopSong";
 import { loadSongAndPlay } from "./utils/loadSongAndPlay";
 import { QueueType } from "./typings/playerTypes";
 import MobilePlayer from "./Components/Mobile/MobilePlayer";
+import { shuffleArray } from "./utils/shuffleArray";
 import Queue from "./Components/Desktop/Queue";
 import { song } from "./test";
 import "./style/style.css";
@@ -30,7 +31,11 @@ const ReactSimplifiedPlayer = () => {
   const [popUp, setPopUp] = useState(false);
   const [songData, setSongData] = useState<QueueType[]>(song);
   const [currentRef, setCurrentRef] = useState(audioRef);
-  const [playingSongIndex, setPlayingSongIndex] = useState()
+  const [shuffledQueue, setShuffledQueue] = useState<QueueType[]>([]);
+
+  useEffect(() => {
+    setShuffledQueue(shuffleArray(songData));
+  }, []);
 
   const [timeLapse, setTimeLapse] = useState({
     current: 0,
@@ -47,8 +52,19 @@ const ReactSimplifiedPlayer = () => {
     if (repeatInitial[loop] === "none") return;
 
     if (repeatInitial[loop] === "repeat") {
+      if (control.shuffle) {
+        const randomNumber = Math.floor(Math.random() * songData.length)
+        setCurrentIndex(randomNumber);
+        loadSongAndPlay(currentRef);
+        return setControl((prev) => {
+          return { ...prev, playing: true };
+        });
+      }
       setCurrentIndex((prev) => loopSong(prev, songData));
-      return loadSongAndPlay(currentRef);
+      loadSongAndPlay(currentRef);
+      return setControl((prev) => {
+        return { ...prev, playing: true };
+      });
     }
 
     if (repeatInitial[loop] === "repeat-song") {
@@ -162,12 +178,32 @@ const ReactSimplifiedPlayer = () => {
       if (prev - 1 <= -1) return lastSongIndex;
       return prev - 1;
     });
+    setControl((prev) => {
+      return {
+        ...prev,
+        playing: true,
+      };
+    });
   };
 
   const forwardSong = () => {
     setCurrentIndex((prev) => {
+      // if(control.shuffle){
+      //   const findSongInShuffle = songData.findIndex((song) => song.id === shuffledQueue[0].id)
+      //   console.log(findSongInShuffle);
+
+      //   return findSongInShuffle
+      // }
+
       if (prev + 1 === songData.length) return 0;
       return prev + 1;
+    });
+
+    setControl((prev) => {
+      return {
+        ...prev,
+        playing: true,
+      };
     });
   };
 
@@ -198,11 +234,9 @@ const ReactSimplifiedPlayer = () => {
       });
     }
 
-    if(index < currentIndex){
-      setCurrentIndex(prev => prev - 1)  
+    if (index < currentIndex) {
+      setCurrentIndex((prev) => prev - 1);
     }
-    console.log(currentIndex);
-    
 
     setSongData((prev) => {
       return prev.filter((_, i) => i !== index);
@@ -287,7 +321,7 @@ const ReactSimplifiedPlayer = () => {
           loop={loop}
           currentDutaion={currentDuration}
           total_length={timeLapse.full_length}
-          current={timeLapse.current} 
+          current={timeLapse.current}
         />
         <ConfigPanel
           openQueue={() => setIsOpenQueue(true)}
@@ -313,6 +347,27 @@ const ReactSimplifiedPlayer = () => {
       {windowWidth <= 768 && (
         <MobilePlayer
           {...control}
+          currentIndex={currentIndex}
+          onQueueOpen={(bool) => setIsOpenQueue(bool)}
+          songs={songData}
+          removeSong={removeSong}
+          playSong={(index) => {
+            setControl((prev) => {
+              return {
+                ...prev,
+                playing: false,
+              };
+            });
+            setCurrentIndex(index);
+            setControl((prev) => {
+              return {
+                ...prev,
+                playing: true,
+              };
+            });
+          }}
+          queuePopUp={isOpenQueue}
+          openQueue={() => setIsOpenQueue(true)}
           onPopUp={() => setPopUp(false)}
           isSongLoaded={songData.length !== 0 ?? false}
           backSong={backToSong}
@@ -350,7 +405,7 @@ const ReactSimplifiedPlayer = () => {
       )}
       {windowWidth > 768 && (
         <Queue
-        currentIndex={currentIndex}
+          currentIndex={currentIndex}
           onQueueOpen={(bool) => setIsOpenQueue(bool)}
           songs={songData}
           removeSong={removeSong}

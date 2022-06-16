@@ -5,14 +5,23 @@ import "../../style/queue.css";
 import { QueueType } from "../../typings/playerTypes";
 import { FC, useEffect, useRef } from "react";
 
-const Queue: FC<{
+export interface QueueProps {
   songs: QueueType[];
   onQueueOpen: (bool: boolean) => void;
   removeSong: (index: number) => void;
   playSong: (index: number) => void;
   queuePopUp: boolean;
-  currentIndex: number
-}> = ({ songs, removeSong, playSong, queuePopUp, onQueueOpen, currentIndex }) => {
+  currentIndex: number;
+}
+
+const Queue: FC<QueueProps> = ({
+  songs,
+  removeSong,
+  playSong,
+  queuePopUp,
+  onQueueOpen,
+  currentIndex,
+}) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (event: any) => {
@@ -29,7 +38,10 @@ const Queue: FC<{
   }, []);
 
   return (
-    <div className={queuePopUp ? "queue-container" : "queue-container hidden"} ref={ref}>
+    <div
+      className={queuePopUp ? "queue-container" : "queue-container hidden"}
+      ref={ref}
+    >
       <div className="queue-header">
         <h4 draggable={false}>Queue</h4>
         <div className="close-btn" onClick={() => onQueueOpen(false)}>
@@ -40,7 +52,7 @@ const Queue: FC<{
         {songs.map((song, i) => {
           return (
             <QueueSong
-            currentIndex={currentIndex}
+              currentIndex={currentIndex}
               image_src={song.song_cover as string}
               song_artist={song.song_artist!}
               song_title={song.song_title!}
