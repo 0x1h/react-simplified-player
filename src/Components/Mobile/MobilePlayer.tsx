@@ -12,7 +12,8 @@ interface MobilePlayerProps extends PlayerProps, SongViewProps, QueueProps{
   src: string;
   popUp: boolean,
   onPopUp: () => void,
-  openQueue: () => void
+  openQueue: () => void,
+  showQueue: boolean
 }
 
 const MobilePlayer= forwardRef<HTMLAudioElement, MobilePlayerProps>((props, ref) => {
@@ -44,7 +45,10 @@ const MobilePlayer= forwardRef<HTMLAudioElement, MobilePlayerProps>((props, ref)
         </div>
         <div className="extra-icons">
           <div className="queue-opener-icon" onClick={props.openQueue}>
-            <FontAwesomeIcon icon={faLayerGroup} color={"#FFF"} />
+            {
+              props.showQueue && 
+              <FontAwesomeIcon icon={faLayerGroup} color={"#FFF"} />
+            }
           </div>
         </div>
       </div>

@@ -1,9 +1,9 @@
+import { FC, useEffect, useRef } from "react";
 import QueueSong from "./QueueSong";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "../../style/queue.css";
 import { QueueType } from "../../typings/playerTypes";
-import { FC, useEffect, useRef } from "react";
+import "../../style/queue.css";
 
 export interface QueueProps {
   songs: QueueType[];

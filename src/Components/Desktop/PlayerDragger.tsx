@@ -10,6 +10,7 @@ interface TimelineProps {
   current: number;
   total_length: number;
   skipToTime: (to: number) => void;
+  color: string
 }
 
 export type DraggableType = React.MouseEvent<HTMLElement>;
@@ -83,6 +84,7 @@ const PlayerDragger: FC<TimelineProps> = (props) => {
           className="current-drag"
           style={{
             width: `${beforeChangeTime}%`,
+            background: `${props.color}`
           }}
         ></div>
       </div>

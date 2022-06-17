@@ -8,12 +8,21 @@ export interface SongContentType {
 export interface QueueType {
   song_cover?: string;
   song_title?: string;
-  id: string
+  id?: string
   song_artist?: string;
   url: string;
 }
 
-interface PlayerProps {
-    mainColor?: string,
-    
+export interface PlayerProps {
+    mainColor: string,
+    queue?:boolean,
+    song: QueueType,
+    defaultVolume?: number,
+    showQueue?: boolean,
+    onVolumeChange?: (volume: number) => void,
+    onAudioPlay?: (currentSong: QueueType) => void
+    onAudioPause?: (currentSong: QueueType) => void, 
+    onAudioEnded?: (currentSong: QueueType) => void,
+    onForward?: (currentSong: QueueType) => void,
+    onBack?: (currentSong: QueueType) => void
 }

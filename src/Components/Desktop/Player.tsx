@@ -27,6 +27,7 @@ export interface PlayerProps {
   backSong: () => void;
   forwardSong: () => void;
   isSongLoaded: boolean;
+  color: string
 }
 
 const Player = forwardRef<HTMLAudioElement, PlayerProps>((props, ref) => {
@@ -121,6 +122,7 @@ const Player = forwardRef<HTMLAudioElement, PlayerProps>((props, ref) => {
         </p>
       </div>
       <PlayerDragger
+        color={props.color}
         isSongLoaded={props.isSongLoaded}
         currentDuration={props.currentDutaion}
         setDuration={(time) => props.setDuration(time)}
