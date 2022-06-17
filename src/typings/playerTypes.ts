@@ -16,7 +16,7 @@ export interface QueueType {
 export interface PlayerProps {
     mainColor: string,
     queue?:boolean,
-    song: QueueType,
+    song?: QueueType,
     defaultVolume?: number,
     showQueue?: boolean,
     onVolumeChange?: (volume: number) => void,
