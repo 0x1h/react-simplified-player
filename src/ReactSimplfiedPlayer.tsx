@@ -127,7 +127,7 @@ const ReactSimplifiedPlayer: FC<PlayerProps> = (props) => {
         playing: false,
       };
     });
-    props.onAudioEnded!(songData[currentIndex])
+    if(props.onAudioEnded !== undefined) props.onAudioEnded(songData[currentIndex])
   };
 
   const onLoadAudio = () => {
