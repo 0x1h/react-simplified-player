@@ -13,19 +13,19 @@ import { forwardRef } from "react";
 import { formatSeconds } from "../../utils/formatSeconds";
 
 export interface PlayerProps {
+  toggleButton: (key: keyof ConfigsTypes) => void;
+  repeat: () => void;
+  setDuration: (time: number) => void;
+  skipToTime: (to: number) => void;
+  backSong: () => void;
+  forwardSong: () => void;
   playing: boolean;
   shuffle: boolean;
   loop: number;
   currentDutaion: number;
-  toggleButton: (key: keyof ConfigsTypes) => void;
-  repeat: () => void;
-  setDuration: (time: number) => void;
   current: number;
   total_length: number;
   song_uri: string;
-  skipToTime: (to: number) => void;
-  backSong: () => void;
-  forwardSong: () => void;
   isSongLoaded: boolean;
   color: string
 }
