@@ -1,0 +1,350 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap");
+
+@import "./utils/utils";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #000;
+}
+
+.container {
+  width: 100%;
+  height: 80px;
+  background: rgba(34, 34, 34, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(22, 26, 71, 0.37);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 10px 10px 0 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  position: absolute;
+  right: 0;
+  display: flex;
+  z-index: 99;
+  align-items: center;
+  bottom: 0;
+  padding: 0 20px;
+  @media screen and(max-width: 768px) {
+    height: 60px;
+  }
+  .song-content {
+    .loader-wrapper {
+      position: relative;
+      width: 50px;
+      height: 50px;
+      margin-top: 20px;
+    }
+    @media screen and(max-width: 768px) {
+      cursor: pointer;
+    }
+
+    width: 300px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .song_cover {
+      overflow: hidden;
+      @include Center();
+      width: 50px;
+      height: 50px;
+      overflow: hidden;
+      background: linear-gradient(75deg, #0f0f0f, #271333, #311e3b);
+      border-radius: 10px;
+      @media screen and(max-width: 768px) {
+        width: 40px;
+        height: 40px;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+
+        &::selection {
+          background: none;
+          color: none;
+        }
+      }
+    }
+
+    .song-credits {
+      margin-left: 10px;
+      height: 100%;
+      padding: 20px 0;
+      @media screen and(max-width: 768px) {
+        padding: 10px 0;
+      }
+      .board {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        box-sizing: border-box;
+
+        .song_title {
+          display: inline-block;
+          color: #fff;
+          padding-left: 100%;
+          animation: move 5s linear infinite;
+          color: #fff;
+          cursor: default;
+          font-size: 0.8em;
+        }
+      }
+
+      .song_title {
+        color: #fff;
+        overflow: hidden;
+        cursor: default;
+        font-size: 0.8em;
+      }
+
+      .song_artist {
+        color: rgb(196, 196, 196);
+        overflow: hidden;
+        font-size: 0.8em;
+        cursor: default;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .player {
+    width: 100%;
+    height: 100%;
+    padding: 5px 10px;
+    @include Center();
+    .mobile-view-timelapse{
+      display: none
+    }
+    flex-direction: column;
+    @media screen and(max-width: 768px) {
+      width: 100px;
+      padding: 0;
+      position: absolute;
+      right: 0;
+    }
+    .buttons-wrapper {
+      @include Center();
+      justify-content: space-around;
+      max-width: 300px;
+      width: 100%;
+      height: 100px;
+      padding: 0 10px;
+      @media screen and(max-width: 768px) {
+        max-width: none;
+        width: 50px;
+      }
+      .control-btn {
+        @include Center();
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #fff;
+        &.forbidden {
+          cursor: not-allowed;
+        }
+      }
+
+      .secondary-btn {
+        cursor: pointer;
+        @include Center();
+        width: 30px;
+        @media screen and(max-width: 768px) {
+          display: none;
+        }
+        height: 30px;
+        border-radius: 50%;
+        position: relative;
+        &.forbidden {
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    .player-dragger {
+      width: 100%;
+      height: 100%;
+      padding: 0 20%;
+      @include Center();
+      @media screen and(max-width: 768px) {
+        display: none;
+      }
+      .timelapse {
+        @include Center();
+        font-weight: 300;
+        font-size: 0.7em;
+        letter-spacing: 1px;
+        width: 50px;
+        cursor: default;
+
+        &::selection {
+          background: none;
+          color: none;
+        }
+
+        color: rgb(202, 202, 202);
+
+        &:nth-child(1) {
+          transform: translateX(-10px);
+        }
+      }
+
+      .timeline-wrapper {
+        width: 100%;
+        height: 5px;
+        border-radius: 50px;
+        background-color: #545454;
+        position: relative;
+        &.forbidden {
+          cursor: not-allowed;
+        }
+        &:hover {
+          .current-drag {
+            background-color: #34eb6b;
+
+            &::before {
+              visibility: visible;
+            }
+          }
+        }
+
+        .current-drag {
+          position: absolute;
+          background-color: #fff;
+          left: 0;
+          top: 0;
+          height: 100%;
+          border-radius: 50px;
+
+          &::before {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 0;
+            transform: translate(50%, -2.2px);
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            visibility: hidden;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+
+  .config-panel {
+    @include Center();
+    width: 300px;
+    padding: 0 20px;
+    height: 100%;
+    @media screen and(max-width: 768px) {
+      display: none;
+    }
+
+    .volume-dragger {
+      @include Center();
+      width: 100%;
+      height: 100%;
+      .volume-icon-box {
+        width: 45px;
+        height: 35px;
+        @include Center();
+
+        &.pointer {
+          cursor: pointer;
+        }
+      }
+
+      .volume-wrapper {
+        width: calc(100% - 20px);
+        height: 5px;
+        border-radius: 50px;
+        background-color: #545454;
+        position: relative;
+
+        &:hover {
+          .current-volume {
+            background-color: #34eb6b;
+
+            &::before {
+              visibility: visible;
+            }
+          }
+        }
+
+        .current-volume {
+          position: absolute;
+          background-color: #fff;
+          left: 0;
+          top: 0;
+          height: 100%;
+          border-radius: 50px;
+
+          &::before {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 0;
+            transform: translate(50%, -2.2px);
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            visibility: hidden;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+  .small-time-lapse {
+    @media screen and (max-width: 768px) {
+      display: block;
+    }
+    overflow: hidden;
+    display: none;
+    width: 100%;
+    height: 2px;
+    background-color: #545454;
+    position: absolute;
+    border-radius: 50px;
+    bottom: 0;
+    left: 0;
+    .small-current-time {
+      background-color: #fff;
+      border-radius: 50px;
+      height: 100%;
+    }
+  }
+}
+
+.small-one {
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.125em;
+}
+
+@keyframes move {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
+}

@@ -1,0 +1,191 @@
+@import "./utils/utils";
+
+.queue-container {
+  width: 100%;
+  max-width: 400px;
+  position: fixed;
+  overflow: hidden;
+  height: 100%;
+  max-height: 400px;
+  background: rgba(34, 34, 34, 0.25);
+  backdrop-filter: blur(16px);
+  transition: 0.2s;
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  transform: translateY(-80px);
+  @media screen and (max-width: 768px){
+    transform: translateY(0px);
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    height: 100vh;
+  -webkit-backdrop-filter: blur(26px);
+
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+  }
+  &.hidden {
+    transform: translateY(100%);
+  }
+  .queue-header {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    h4 {
+      color: #fff;
+      cursor: default;
+      font-weight: 700;
+      &::selection {
+        background: none;
+      }
+    }
+    .close-btn {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      transition: 0.2s ease;
+      @include Center();
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+  .queue-list {
+    height: 100%;
+    overflow-y: auto;
+    padding: 10px 5px;
+    padding-bottom: 40px;
+    transition: 0.5s;
+    .queue-song {
+      display: flex;
+      align-items: center;
+      transition: 0.2s ease;
+      .delete-btn {
+        @include Center();
+        width: 36px;
+        height: 35px;
+        border-radius: 50%;
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+        }
+      }
+      &.slided {
+        transform: translateX(100%);
+      }
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        .play-song-wrapper {
+          .index-box {
+            p {
+              display: none;
+            }
+            .queue-play-icon {
+              display: block;
+            }
+          }
+        }
+      }
+      transition: 0.125s ease-in-out;
+      .play-song-wrapper {
+        width: 100%;
+        height: 40px;
+        display: flex;
+        margin: 1px 0;
+        align-items: center;
+        border-radius: 5px;
+        .index-box {
+          @include Center();
+          width: 30px;
+          position: relative;
+          color: #fff;
+          cursor: default;
+          &.playing {
+            .queue-play-icon {
+              display: block;
+            }
+            p {
+              display: none;
+            }
+          }
+          .queue-play-icon {
+            display: none;
+            position: absolute;
+          }
+          p {
+            &::selection {
+              background: none;
+            }
+          }
+        }
+        .image-wrapper {
+          min-width: 35px;
+          max-width: 35px;
+          height: 35px;
+          overflow: hidden;
+          border-radius: 2px;
+          background: linear-gradient(75deg, #0f0f0f, #271333, #311e3b);
+          img {
+            width: 100%;
+            height: 100%;
+            &::selection {
+              background: none;
+            }
+          }
+        }
+        .song-info {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          padding: 7px 0;
+          .song-title {
+            padding: 0 5px;
+            display: flex;
+            align-items: center;
+            color: #fff;
+            font-size: 0.6rem;
+            height: 100%;
+            width: 100%;
+            cursor: default;
+            &.playing {
+              color: #75e368;
+            }
+          }
+          .song-artist {
+            padding: 0 5px;
+            cursor: default;
+            font-size: 0.6rem;
+            display: flex;
+            align-items: center;
+            color: #a9a9a9;
+            height: 100%;
+            width: 100%;
+            &.playing {
+              color: #75e368;
+            }
+          }
+        }
+      }
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: #a9a9a9;
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+      }
+      &::-webkit-scrollbar-track {
+        background-color: #151515;
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.4);
+      }
+    }
+  }
+}

@@ -1,0 +1,1 @@
+export { ReactSimplifiedPlayer } from "./ReactSimplifiedPlayer";
