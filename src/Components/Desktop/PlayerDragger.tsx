@@ -11,71 +11,58 @@ const PlayerDragger: FC<TimelineProps> = (props) => {
   const timelineRef = useRef<HTMLDivElement>(null);
   const [pressed, setPressed] = useState(false);
   const [startPosition, setStartPosition] = useState(0);
+  const [timelineBound, setTimeLineBound] = useState(0);
   const { beforeChangeTime, setBeforeChangeTime } = useBeforeChangeTime(
     props.currentDuration,
     pressed
   );
 
-  const onmousemove = (e: DraggableType) => {
+  const onmousemove = (e: MouseEvent) => {
     if (!pressed) return;
     if (beforeChangeTime >= 100) return;
     if (!props.isSongLoaded) return;
 
-    const dragged: number = calculatePercentage(e, timelineRef);
+    const dragged: number = calculatePercentage(
+      e as any,
+      timelineRef,
+      startPosition,
+      timelineBound
+    );
+
     setBeforeChangeTime(dragged);
   };
 
-  const moveUpEvent = (e: MouseEvent) => {
-    if (!props.isSongLoaded) return;
+  const moveUpEvent = () => {
+    if (!pressed) return;
 
-    if (
-      timelineRef.current &&
-      !timelineRef.current.contains(e.target as Node)
-    ) {
-      const skipTo: number = calculateSkip(
-        props.total_length,
-        beforeChangeTime
-      );
-      // props.skipToTime(skipTo);
-    }
+    const skipTo: number = calculateSkip(props.total_length, beforeChangeTime);
+
+    props.skipToTime(skipTo);
+    setPressed(false);
   };
 
   const mouseDown = (e: MouseEvent) => {
     if (!props.isSongLoaded) return;
     if (timelineRef.current && timelineRef.current.contains(e.target as Node)) {
-      console.log(true);
-      
-      // setBeforeChangeTime(calculatePercentage(e as any, timelineRef));
-      setPressed(true);
-      console.log(e.clientX)
       setStartPosition(e.clientX);
+      setBeforeChangeTime(
+        calculatePercentage(e as any, timelineRef, startPosition, timelineBound)
+      );
+      setPressed(true);
     }
-  };
-
-  console.log(pressed);
-
-  const mouseMove = (e: MouseEvent) => {
-    console.log({
-      eClientX:e.clientX,
-      startPosition,
-      crr: props.currentDuration
-    })
-    const mustBe = (e.clientX - startPosition) + props.currentDuration;
-
-    console.log("mustBe:", mustBe);
   };
 
   useEffect(() => {
     window.addEventListener("mouseup", moveUpEvent);
     window.addEventListener("mousedown", mouseDown);
-    window.addEventListener("mousemove", mouseMove);
+    window.addEventListener("mousemove", onmousemove);
 
     return () => {
       window.removeEventListener("mouseup", moveUpEvent);
       window.removeEventListener("mousedown", mouseDown);
-      window.removeEventListener("mousemove", mouseMove);
+      window.removeEventListener("mousemove", onmousemove);
     };
-  }, []);
+  });
 
   return (
     <div className="player-dragger" draggable={false}>
@@ -89,6 +76,11 @@ const PlayerDragger: FC<TimelineProps> = (props) => {
           props.isSongLoaded ? "timeline-wrapper" : "timeline-wrapper forbidden"
         }
         ref={timelineRef}
+        onMouseDown={(e) => {
+          setStartPosition(e.clientX);
+          const { left } = e.currentTarget.getBoundingClientRect();
+          setTimeLineBound(e.clientX - left);
+        }}
       >
         <div
           className="current-drag"

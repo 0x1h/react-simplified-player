@@ -1,17 +1,24 @@
-import { RefObject } from 'react';
+import { RefObject } from "react";
 import { DraggableType } from "../Components/Desktop/PlayerDragger";
 
-export const calculatePercentage = (e: DraggableType, element: RefObject<HTMLElement>): number => {
-    // const { left } = e.currentTarget.getBoundingClientRect();
-    // const x = e.clientX - left;
+export const calculatePercentage = (
+  e: DraggableType,
+  element: RefObject<HTMLElement>,
+  startPosition: number,
+  timelineBound: number
+): number => {
+  const getWidth = window.getComputedStyle(element.current!);
+  const timeLineWidth = Number(
+    getWidth.getPropertyValue("width").replace("px", "")
+  );
 
-    // const getWidth = window.getComputedStyle(element.current!)
-    // const timeLineWidth = Number(getWidth.getPropertyValue("width").replace("px", ""))
+  const fixBounding = timelineBound < 0 ? 0 : timelineBound;
+  const dragHandler = e.clientX - startPosition + fixBounding;
 
-    // const duration = Number(((x / timeLineWidth) * 100).toFixed(2))
+  const dragInPercentage = Number((dragHandler / timeLineWidth) * 100);
 
-    // console.log("calculatePercentage:",duration)
+  if (dragInPercentage > 100) return 100;
+  if (dragInPercentage < 0) return 0;
 
-    // return duration
-    return 0
-}
+  return dragInPercentage;
+};

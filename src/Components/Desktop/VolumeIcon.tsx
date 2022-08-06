@@ -3,7 +3,6 @@ import {
   faVolumeLow,
   faVolumeOff,
   faVolumeXmark,
-  faLayerGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {FC} from 'react'

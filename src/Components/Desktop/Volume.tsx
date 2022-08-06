@@ -1,11 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faVolumeHigh,
-  faVolumeLow,
-  faVolumeOff,
-  faVolumeXmark,
-  faLayerGroup,
-} from "@fortawesome/free-solid-svg-icons";
+import { faLayerGroup } from "@fortawesome/free-solid-svg-icons";
 import { FC, useEffect, useRef, useState } from "react";
 import { calculatePercentage } from "../../utils/calculatePercentage";
 import { VolumeIcon } from "./VolumeIcon";
@@ -29,55 +23,80 @@ const Volume: FC<VolumeProps> = ({
   const volumeRef = useRef<HTMLDivElement>(null);
   const [pressed, setPressed] = useState<boolean>(false);
   const [beforeValue, setBeforeValue] = useState<number>(0);
+  const [startPosition, setStartPosition] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
+  const [timelineBound, setTimeLineBound] = useState(0);
 
   useEffect(() => {
     setBeforeValue(volume * 100);
   }, []);
 
-  const onmousemove = (e: DraggableType) => {
-    if (!pressed) return;
-    if (beforeValue >= 100 || beforeValue <= 0) return;
+  
 
-    const dragged: number = calculatePercentage(e, volumeRef);
-    setBeforeValue(dragged);
+  const onmousemove = (e: MouseEvent) => {
+    if (!pressed) return;
+    if (beforeValue >= 100) return;
+
+    const dragged: number = calculatePercentage(
+      e as any,
+      volumeRef,
+      startPosition,
+      timelineBound
+    );
+
+    setBeforeValue(dragged)
     setVolume(beforeValue);
   };
 
-  const moveUpEvent = (e: MouseEvent) => {
+  
+
+  const mouseDown = (e: MouseEvent) => {
+    if (volumeRef.current && volumeRef.current.contains(e.target as Node)) {
+      setStartPosition(e.clientX);
+      setBeforeValue(
+        calculatePercentage(e as any, volumeRef, startPosition, timelineBound)
+      );
+      setPressed(true);
+    }
+  };
+
+  const moveUpEvent = () => {
     if (!pressed) return;
 
-    setPressed(false);
-    setPressed(false);
     setVolume(beforeValue);
+    setPressed(false);
   };
 
   useEffect(() => {
     window.addEventListener("mouseup", moveUpEvent);
+    window.addEventListener("mousedown", mouseDown);
+    window.addEventListener("mousemove", onmousemove);
 
     return () => {
       window.removeEventListener("mouseup", moveUpEvent);
+      window.removeEventListener("mousedown", mouseDown);
+      window.removeEventListener("mousemove", onmousemove);
     };
   });
 
   return (
-    <div className="volume">
+    <div className="volume-dragger">
       {showQueue && (
         <div className="volume-icon-box pointer" onClick={openQueue}>
           <FontAwesomeIcon icon={faLayerGroup} color={"#FFF"} />
         </div>
       )}
-      <VolumeIcon beforeValue={beforeValue}/>
+      <VolumeIcon beforeValue={beforeValue} />
       <div
         className="volume-wrapper"
         ref={volumeRef}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         onMouseDown={(e) => {
-          setBeforeValue(calculatePercentage(e, volumeRef));
-          setPressed(true);
+          setStartPosition(e.clientX);
+          const { left } = e.currentTarget.getBoundingClientRect();
+          setTimeLineBound(e.clientX - left);
         }}
-        onMouseMove={onmousemove}
       >
         <div
           className="current-volume"
