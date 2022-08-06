@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FC, useEffect, useRef, useState } from "react";
 import { calculatePercentage } from "../../utils/calculatePercentage";
+import { VolumeIcon } from "./VolumeIcon";
 import { DraggableType } from "./PlayerDragger";
 
 export interface VolumeProps {
@@ -60,26 +61,13 @@ const Volume: FC<VolumeProps> = ({
   });
 
   return (
-    <div className="volume-dragger">
+    <div className="volume">
       {showQueue && (
         <div className="volume-icon-box pointer" onClick={openQueue}>
           <FontAwesomeIcon icon={faLayerGroup} color={"#FFF"} />
         </div>
       )}
-      <div className="volume-icon-box">
-        {beforeValue >= 75 && (
-          <FontAwesomeIcon icon={faVolumeHigh} color={"#FFF"} />
-        )}
-        {beforeValue < 75 && beforeValue > 25 && (
-          <FontAwesomeIcon icon={faVolumeLow} color={"#FFF"} />
-        )}
-        {beforeValue < 25 && beforeValue > 0 && (
-          <FontAwesomeIcon icon={faVolumeOff} color={"#FFF"} />
-        )}
-        {beforeValue <= 0 && (
-          <FontAwesomeIcon icon={faVolumeXmark} color={"#FFF"} />
-        )}
-      </div>
+      <VolumeIcon beforeValue={beforeValue}/>
       <div
         className="volume-wrapper"
         ref={volumeRef}

@@ -3,7 +3,6 @@ import { loopSong } from "./utils/loopSong";
 import { loadSongAndPlay } from "./utils/loadSongAndPlay";
 import { QueueType } from "./typings/playerTypes";
 import { PlayerProps } from "./typings/playerTypes";
-import { token } from "./utils/token";
 import { initialConfig, ConfigsTypes, LoopType } from "./typings/initialStates";
 import ConfigPanel from "./Components/Desktop/ConfigPanel";
 import SongContent from "./Components/Desktop/SongContent";
@@ -354,7 +353,7 @@ const ReactSimplifiedPlayer: FC<PlayerProps> = (props) => {
   };
 
   const onContextMenu = (e: MouseEvent) => {
-    // e.preventDefault()
+    e.preventDefault()
   };
 
   useEffect(() => {
