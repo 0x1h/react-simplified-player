@@ -1,16 +1,16 @@
-<center>
+<div align="center">
 	<img src="https://camo.githubusercontent.com/757f6d12dd3099b150a559147ebcfbe35264dbcaca2f6bd2b675bc7c7ec85c57/68747470733a2f2f692e6962622e636f2f365931333042472f696d6167652e706e67" width="200"> 
 	<h1>react-simplified-player</h1>
 	Simple Easy Customizable React Audio Player 🎶
-</center>
+</div>
 
-<center>
+<div align="center">
 <img src="https://img.shields.io/npm/dt/react-simplified-player.svg">
 <img src="https://img.shields.io/static/v1?label=version&message=v1.0.5&color=yellow">
 <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=black">
 <img src="https://img.shields.io/static/v1?label=minzipped file&message=45.1 KB&color=success">
 <img src="https://visitor-badge.glitch.me/badge?page_id=callmenikk.react-simplified-player">
-</center>
+</div>
 
 ##  📦  Installation
 
@@ -27,10 +27,10 @@ using `npm`:
 
 > Mobile
 
-<center>
+<div align="center">
 <img src="https://i.ibb.co/JjH7NNK/Screenshot-2022-08-07-014130.png" width="300">
 <img src="https://i.ibb.co/kBLDbDZ/Screenshot-2022-08-07-014146.png" width="300">
-</center>
+</div>
 
 ## ✨  Feature list
 
