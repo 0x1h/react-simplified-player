@@ -1,14 +1,33 @@
 {
   "name": "react-simplified-player",
-  "version": "1.0.2",
+  "version": "1.0.71",
   "description": "",
   "main": "index.js",
+  "keywords": [   "react",
+  "reactjs",
+  "player",
+  "music",
+  "audio",
+  "react-player",
+  "react-music-player",
+  "react-audio-player",
+  "cd-player",
+  "music-player",
+  "audio-player",
+  "component",
+  "mp3"
+],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "callmenikk",
   "license": "ISC",
   "types": "./index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/callmenikk/react-simplified-player"
+  },
+  "homepage": "https://react-simplified-player.netlify.app/",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
