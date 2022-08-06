@@ -18,6 +18,10 @@ using `npm`:
 
 `npm i react-simplified-player`
 
+using `yarn`: 
+
+`yarn add react-simplified-player`	
+
 ## 🖼️  Screenshots
 
 > Desktop
