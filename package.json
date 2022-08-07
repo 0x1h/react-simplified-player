@@ -1,16 +1,34 @@
 {
   "name": "react-simplified-player",
-  "version": "0.0.2",
-  "description": "",
+  "version": "1.0.77",
+  "description": "Simple Easy Customizable React Audio Player 🎶",
   "main": "index.js",
+  "keywords": [
+    "react",
+    "reactjs",
+    "player",
+    "music",
+    "audio",
+    "react-player",
+    "react-music-player",
+    "react-audio-player",
+    "cd-player",
+    "music-player",
+    "audio-player",
+    "component",
+    "mp3-player",
+    "mp3",
+    "spotify-player",
+    "spotify-audio-player"
+  ],
   "scripts": {
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "clean": "rm -rf dist",
     "build-lib": "npm run clean && tsc && cp package.json README.md ./dist"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "callmenikk",
+  "license": "MIT",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
