@@ -3,6 +3,9 @@
   "version": "1.0.77",
   "description": "Simple Easy Customizable React Audio Player 🎶",
   "main": "index.js",
+  "publishConfig": {
+    "callmenikk:registry": "https://npm.pkg.github.com"
+  },
   "keywords": [
     "react",
     "reactjs",
