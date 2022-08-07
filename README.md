@@ -70,7 +70,7 @@ root.render(<ReactSimplifiedPlayer {...props} />);
 |--|--|--|--|--|
 | mainColor | string | `-` |  ✅ | main color shows the background of draggable player
 | showQueue | boolean | `false` |   | showing queue on player
-| song | string | [`QueueType`](https://github.com/callmenikk/react-simplified-player/blob/6f271275f4dd166c376ab537ec27159dbe051165/src/typings/playerTypes.ts#L8)|  ✅ | which song must be added to queue or which one should play, if you dont have music yet just put there boilerplate
+| song | [`QueueType`](https://github.com/callmenikk/react-simplified-player/blob/6f271275f4dd166c376ab537ec27159dbe051165/src/typings/playerTypes.ts#L8) | `-` |  ✅ | which song must be added to queue or which one should play, if you dont have music yet just put there boilerplate
 | defaultVolume | `0-1` | `0.5` |   | when page loads default volume of playing song
 | onVolumeChange | `(volume: string) => void` | `-` |   | when you change volume it triggers `volume` parameter and shows volume level `0-1`
 | onAudioPlay | `(currentSong:` [`QueueType`](https://github.com/callmenikk/react-simplified-player/blob/6f271275f4dd166c376ab537ec27159dbe051165/src/typings/playerTypes.ts#L8)`)=> void ` | `-` |   | when you click **play** of song it `currentSong` show object of what song is playing right now
