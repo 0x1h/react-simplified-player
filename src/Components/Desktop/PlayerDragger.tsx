@@ -1,4 +1,4 @@
-import React,{ FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { formatSeconds } from "../../utils/formatSeconds";
 import { TimelineProps } from "./types/timeline.types";
 import { calculatePercentage } from "../../utils/calculatePercentage";
@@ -17,7 +17,7 @@ const PlayerDragger: FC<TimelineProps> = (props) => {
     pressed
   );
 
-  const onmousemove = (e: MouseEvent) => {
+  const onmousemove = (e: MouseEvent | TouchEvent) => {
     if (!pressed) return;
     if (beforeChangeTime >= 100) return;
     if (!props.isSongLoaded) return;
@@ -36,7 +36,8 @@ const PlayerDragger: FC<TimelineProps> = (props) => {
     if (!pressed) return;
 
     const skipTo: number = calculateSkip(props.total_length, beforeChangeTime);
-
+    if(isNaN(skipTo)) return
+    
     props.skipToTime(skipTo);
     setPressed(false);
   };
@@ -51,16 +52,52 @@ const PlayerDragger: FC<TimelineProps> = (props) => {
       setPressed(true);
     }
   };
+  
+
+  const onTouchDown = (e: TouchEvent) => {
+    if (!props.isSongLoaded) return;
+    if (timelineRef.current && timelineRef.current.contains(e.target as Node)) {
+      setStartPosition(e.touches[0].clientX);
+      setBeforeChangeTime(
+        calculatePercentage(e as any, timelineRef, startPosition, timelineBound)
+      );
+      setPressed(true);
+    }
+  };
+
+  const ontouchmove = (e: TouchEvent) => {
+    if (!pressed) return;
+    if (beforeChangeTime >= 100) return;
+    if (!props.isSongLoaded) return;
+
+    const dragged: number = calculatePercentage(
+      e.touches[0] as any,
+      timelineRef,
+      startPosition,
+      timelineBound
+    );
+
+    setBeforeChangeTime(dragged);
+  };
+
 
   useEffect(() => {
     window.addEventListener("mouseup", moveUpEvent);
     window.addEventListener("mousedown", mouseDown);
     window.addEventListener("mousemove", onmousemove);
 
+    window.addEventListener("touchend", moveUpEvent);
+    window.addEventListener("touchstart", onTouchDown);
+    window.addEventListener("touchmove", ontouchmove);
+
     return () => {
       window.removeEventListener("mouseup", moveUpEvent);
       window.removeEventListener("mousedown", mouseDown);
       window.removeEventListener("mousemove", onmousemove);
+
+      window.removeEventListener("touchend", moveUpEvent);
+      window.removeEventListener("touchstart", onTouchDown);
+      window.removeEventListener("touchmove", ontouchmove);
     };
   });
 
@@ -76,7 +113,7 @@ const PlayerDragger: FC<TimelineProps> = (props) => {
           props.isSongLoaded ? "timeline-wrapper" : "timeline-wrapper forbidden"
         }
         ref={timelineRef}
-        onMouseDown={(e) => {
+        onPointerDown={(e) => {
           setStartPosition(e.clientX);
           const { left } = e.currentTarget.getBoundingClientRect();
           setTimeLineBound(e.clientX - left);
