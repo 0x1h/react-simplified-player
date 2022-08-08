@@ -5,6 +5,7 @@ import { faLayerGroup } from "@fortawesome/free-solid-svg-icons";
 import SongInfoView, { SongViewProps } from "./SongInfoView";
 import Player from "../Desktop/Player"
 import { PlayerProps } from "../../typings/player.types";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { QueueProps } from "../Desktop/Queue";
 import Queue from "../Desktop/Queue";
 
@@ -53,7 +54,7 @@ const MobilePlayer = forwardRef<HTMLAudioElement, MobilePlayerProps>(
           <div className="extra-icons">
             <div className="queue-opener-icon" onClick={props.openQueue}>
               {props.showQueue && (
-                <FontAwesomeIcon icon={faLayerGroup} color={"#FFF"} />
+                <FontAwesomeIcon icon={faLayerGroup as IconProp} color={"#FFF"} />
               )}
             </div>
           </div>

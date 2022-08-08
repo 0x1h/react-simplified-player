@@ -320,7 +320,7 @@ export const ReactSimplifiedPlayer: FC<PlayerProps> = (props) => {
 
   return (
     <>
-      <div className="container" ref={playerRef}>
+      <div className="react-simplified-player-container" ref={playerRef}>
         <SongContent
           openPlayer={() => setPopUp(true)}
           windowWidth={windowWidth}

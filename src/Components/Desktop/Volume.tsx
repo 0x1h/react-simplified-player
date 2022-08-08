@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLayerGroup } from "@fortawesome/free-solid-svg-icons";
 import React, { FC, useEffect, useRef, useState } from "react";
 import { calculatePercentage } from "../../utils/calculatePercentage";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { VolumeIcon } from "./VolumeIcon";
 
 export interface VolumeProps {
@@ -78,7 +79,7 @@ const Volume: FC<VolumeProps> = ({
     <div className="volume-dragger">
       {showQueue && (
         <div className="volume-icon-box pointer" onClick={openQueue}>
-          <FontAwesomeIcon icon={faLayerGroup} color={"#FFF"} />
+          <FontAwesomeIcon icon={faLayerGroup as IconProp} color={"#FFF"} />
         </div>
       )}
       <VolumeIcon beforeValue={beforeValue} />

@@ -8,6 +8,7 @@ import {
   faShuffle,
   faRepeat,
 } from "@fortawesome/free-solid-svg-icons";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { PlayerProps } from "../../typings/player.types";
 import PlayerDragger from "./PlayerDragger";
 import { forwardRef } from "react";
@@ -29,9 +30,9 @@ const Player = forwardRef<HTMLAudioElement, PlayerProps>((props, ref) => {
           className="secondary-btn"
           onClick={() => props.toggleButton("shuffle")}
         >
-          {props.shuffle && <FontAwesomeIcon icon={faShuffle} color={"#FFF"} />}
+          {props.shuffle && <FontAwesomeIcon icon={faShuffle as IconProp} color={"#FFF"} />}
           {!props.shuffle && (
-            <FontAwesomeIcon icon={faShuffle} color={"#545454"} />
+            <FontAwesomeIcon icon={faShuffle as IconProp} color={"#545454"} />
           )}
         </div>
         <div
@@ -43,7 +44,7 @@ const Player = forwardRef<HTMLAudioElement, PlayerProps>((props, ref) => {
             props.backSong();
           }}
         >
-          <FontAwesomeIcon icon={faBackwardStep} color={"#FFF"} />
+          <FontAwesomeIcon icon={faBackwardStep as IconProp} color={"#FFF"} />
         </div>
         <div
           className={
@@ -56,13 +57,13 @@ const Player = forwardRef<HTMLAudioElement, PlayerProps>((props, ref) => {
         >
           {!props.playing ? (
             <FontAwesomeIcon
-              icon={faPlay}
+              icon={faPlay as IconProp}
               style={{
                 transform: "translateX(1.5px)",
               }}
             />
           ) : (
-            <FontAwesomeIcon icon={faPause} />
+            <FontAwesomeIcon icon={faPause as IconProp} />
           )}
         </div>
         <div
@@ -74,18 +75,18 @@ const Player = forwardRef<HTMLAudioElement, PlayerProps>((props, ref) => {
             props.forwardSong();
           }}
         >
-          <FontAwesomeIcon icon={faForwardStep} color={"#FFF"} />
+          <FontAwesomeIcon icon={faForwardStep as IconProp} color={"#FFF"} />
         </div>
         <div className="secondary-btn" onClick={props.repeat}>
           {props.loop === 2 && <p className="small-one">1</p>}
           {props.loop === 0 && (
-            <FontAwesomeIcon icon={faRepeat} color={"#545454"} />
+            <FontAwesomeIcon icon={faRepeat as IconProp} color={"#545454"} />
           )}
           {props.loop === 1 && (
-            <FontAwesomeIcon icon={faRepeat} color={"#FFF"} />
+            <FontAwesomeIcon icon={faRepeat as IconProp} color={"#FFF"} />
           )}
           {props.loop === 2 && (
-            <FontAwesomeIcon icon={faRepeat} color={"#FFF"} />
+            <FontAwesomeIcon icon={faRepeat as IconProp} color={"#FFF"} />
           )}
         </div>
       </div>

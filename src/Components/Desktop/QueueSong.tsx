@@ -1,5 +1,6 @@
 import { faPlay, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import React, { FC, useEffect, useState } from "react";
 
 interface QueueSongProps {
@@ -43,7 +44,7 @@ const QueueSong: FC<QueueSongProps> = (props) => {
         <div className={thisSongPlaying ? "index-box playing": "index-box"}>
           <FontAwesomeIcon
             className="queue-play-icon"
-            icon={faPlay}
+            icon={faPlay as IconProp}
             color={!thisSongPlaying ? "#FFF" : "#75e368"}
             size={"xs"}
           />
@@ -76,7 +77,7 @@ const QueueSong: FC<QueueSongProps> = (props) => {
         </div>
       </div>
         <div className="delete-btn" onClick={() => setPrepareRemove(true)}>
-          <FontAwesomeIcon icon={faTrashCan} color={"#FFF"} />
+          <FontAwesomeIcon icon={faTrashCan as IconProp} color={"#FFF"} />
         </div>
     </div>
   );

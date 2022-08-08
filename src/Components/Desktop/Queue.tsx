@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useRef } from "react";
 import QueueSong from "./QueueSong";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { QueueType } from "../../typings/playerTypes";
 import "../../style/queue.css";
@@ -45,7 +46,7 @@ const Queue: FC<QueueProps> = ({
       <div className="queue-header">
         <h4 draggable={false}>Queue</h4>
         <div className="close-btn" onClick={() => onQueueOpen(false)}>
-          <FontAwesomeIcon icon={faXmark} color={"#FFF"} />
+          <FontAwesomeIcon icon={faXmark  as IconProp} color={"#FFF"} />
         </div>
       </div>
       <div className="queue-list">
