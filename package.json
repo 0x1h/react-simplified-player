@@ -1,6 +1,6 @@
 {
   "name": "react-simplified-player",
-  "version": "1.0.77",
+  "version": "1.0.9",
   "description": "Simple Easy Customizable React Audio Player 🎶",
   "main": "index.js",
   "publishConfig": {

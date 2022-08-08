@@ -38,19 +38,20 @@ export const ReactSimplifiedPlayer: FC<PlayerProps> = (props) => {
 
     if (!props.song!.url.trim()) return;
 
+    // when first song loads it adds 2 song togethers
     if (
       songData[0]?.song_title?.trim() === songData[1]?.song_title?.trim() &&
       songData[0]?.song_artist?.trim() === songData[1]?.song_artist?.trim()
     )
+      //this code removes second extra added song from queue
       setSongData((prev) => {
         return prev.slice(1, 0);
       });
 
+    //if last added song and clicked song urls are same do not add it in queue
     if (
-      props.song!.song_title?.trim() ===
-        songData[lastIndex]?.song_title?.trim() &&
-      props.song!.song_artist?.trim() ===
-        songData[lastIndex]?.song_artist?.trim()
+      props.song!.url.trim() ===
+        songData[lastIndex]?.url.trim() 
     )
       return;
 
@@ -63,6 +64,13 @@ export const ReactSimplifiedPlayer: FC<PlayerProps> = (props) => {
         },
       ];
     });
+    setCurrentIndex(songData.length)
+    setControl((prev) => {
+      return {
+        ...prev,
+        playing: true
+      }
+    })
   }, [props.song]);
 
   const [timeLapse, setTimeLapse] = useState({
