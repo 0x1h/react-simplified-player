@@ -10,7 +10,7 @@
 <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=black">
 <img src="https://img.shields.io/static/v1?label=minzipped file&message=45.1 KB&color=success">
 <img src="https://visitor-badge.glitch.me/badge?page_id=callmenikk.react-simplified-player">
-</div>
+</div> 
 
 ##  📦  Installation
 
