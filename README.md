@@ -1,6 +1,6 @@
 <div align="center">
 	<img src="https://camo.githubusercontent.com/757f6d12dd3099b150a559147ebcfbe35264dbcaca2f6bd2b675bc7c7ec85c57/68747470733a2f2f692e6962622e636f2f365931333042472f696d6167652e706e67" width="200"> 
-	<h1>`react-simplified-player`</h1>
+	<h1><code>react-simplified-player</code></h1>
 	Simple Easy Customizable React Audio Player 🎶
 </div>
 
