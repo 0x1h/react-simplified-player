@@ -6,7 +6,7 @@
 
 <div align="center">
 <img src="https://img.shields.io/npm/dt/react-simplified-player.svg">
-<img src="https://img.shields.io/static/v1?label=version&message=v1.0.9&color=yellow">
+<img src="https://img.shields.io/static/v1?label=version&message=v1.0.93&color=yellow">
 <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=black">
 <img src="https://img.shields.io/static/v1?label=minzipped file&message=45.1 KB&color=success">
 <img src="https://visitor-badge.glitch.me/badge?page_id=callmenikk.react-simplified-player">
